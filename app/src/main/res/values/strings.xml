@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EmployeeLeaveManagement</string>
+    <string name="mocu_eleave">MoCU\neLeave</string>
 </resources>
