@@ -1,4 +1,17 @@
 <resources>
+
     <string name="app_name">EmployeeLeaveManagement</string>
+
+    //login Activity strings
     <string name="mocu_eleave">MoCU\neLeave</string>
+    <string name="employee_smartart">Employee SmartArt</string>
+    <string name="welcome_to_mocu_eleave">Welcome to MoCU eLeave</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="or">or</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="don_t_have_an_account">Don\'t have an Account?</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

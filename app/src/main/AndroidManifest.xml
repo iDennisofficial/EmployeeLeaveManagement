@@ -6,17 +6,15 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/eleavelogomocu"
+        android:icon="@drawable/eleavemoculogo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/eleavelogomocu"
+        android:roundIcon="@drawable/eleavemoculogo"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.EmployeeLeaveManagement"
         tools:targetApi="31">
+
         <activity
-            android:name=".View.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".View.SplashScreenActivity"
+            android:name=".View.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
