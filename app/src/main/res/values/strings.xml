@@ -14,4 +14,29 @@
     <string name="continue_with_google">Continue with Google</string>
     <string name="don_t_have_an_account">Don\'t have an Account?</string>
     <string name="sign_up">Sign Up</string>
+
+    //Registration Activity String
+    <string name="create_an_account">Create an Account</string>
+    <string name="register_name">Name</string>
+    <string name="register_phone_no">Phone Number</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="_continue">Continue</string>
+    <string name="choose_gender">Choose Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="select_birthday">Select Birthday</string>
+    <string name="select_country">Select Country</string>
+    <string name="employee_id">Employee ID</string>
+    <string name="code">Co\nde</string>
+    <string name="verification">Verification</string>
+    <string name="enter_one_time_password_sent_on">Enter One Time Password sent on</string>
+    <string name="_255717975397">+255717975397</string>
+    <string name="verify_code">Verify code</string>
+    <string name="phone_number_verification">Phone Number Verification</string>
+
+
+    //VerifyOTP screen
+
 </resources>

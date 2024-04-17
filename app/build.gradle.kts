@@ -38,8 +38,15 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    //splash screen
-    implementation("androidx.core:core-splashscreen:1.0.0")
+    //country code picker
+    implementation(libs.ccp)
+
+    //OTP pinview
+    implementation(libs.pinview)
+
+
+
+
 
 
 

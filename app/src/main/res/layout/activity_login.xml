@@ -12,8 +12,8 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageViewDoctor"
-            android:layout_width="468dp"
+            android:id="@+id/imageViewEmployee"
+            android:layout_width="match_parent"
             android:layout_height="768dp"
             android:layout_marginTop="-250dp"
             android:contentDescription="@string/employee_smartart"
@@ -57,6 +57,7 @@
                     android:layout_below="@+id/TxtViewWelcome"
                     android:layout_margin="20dp"
                     android:hint="@string/e_mail"
+                    app:endIconMode="clear_text"
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
@@ -79,6 +80,7 @@
                     android:layout_below="@+id/EmailEdtTxtLayout"
                     android:layout_margin="20dp"
                     android:hint="@string/password"
+                    app:endIconMode="password_toggle"
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
@@ -95,7 +97,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/BtnContinue"
+                    android:id="@+id/BtnSignin"
                     style="@style/Widget.Material3.Button.ElevatedButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -111,7 +113,7 @@
                     android:id="@+id/FirstProgressBar"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/BtnContinue"
+                    android:layout_below="@id/BtnSignin"
                     android:layout_margin="18dp"
                     android:progress="100"
                     app:indicatorColor="@color/grey" />
@@ -120,7 +122,7 @@
                     android:id="@+id/TxtViewOr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/BtnContinue"
+                    android:layout_below="@id/BtnSignin"
                     android:layout_marginTop="6dp"
                     android:layout_toEndOf="@id/FirstProgressBar"
                     android:text="@string/or"
@@ -132,7 +134,7 @@
                     android:id="@+id/SecondProgressBar"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/BtnContinue"
+                    android:layout_below="@id/BtnSignin"
                     android:layout_margin="18dp"
                     android:layout_toEndOf="@id/TxtViewOr"
                     android:progress="100"
@@ -222,8 +224,8 @@
                     android:layout_marginVertical="15dp"
                     android:layout_marginStart="1dp"
                     android:layout_toEndOf="@+id/TxtViewHaveNoAccount"
-                    android:text="@string/sign_up"
                     android:padding="2dp"
+                    android:text="@string/sign_up"
                     android:textColor="@color/blue"
                     app:fontFamily="@font/poppins_regular" />
 

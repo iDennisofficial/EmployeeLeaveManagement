@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.RegistrationSecondScreenActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageViewEmployee"
+            android:layout_width="match_parent"
+            android:layout_height="768dp"
+            android:layout_marginTop="-250dp"
+            android:contentDescription="@string/employee_smartart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/employee" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
+            style="?attr/materialCardViewElevatedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="150dp"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/TxtViewGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/choose_gender"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:fontFamily="@font/poppins_medium" />
+
+
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroupGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/TxtViewGender"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/male" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/female" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/other" />
+                </RadioGroup>
+
+                <View
+                    android:id="@+id/viewLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_below="@id/radioGroupGender"
+                    android:layout_marginVertical="5dp"
+                    android:background="@color/black"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/TxtViewAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/viewLine"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="5dp"
+                    android:text="@string/select_birthday"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:fontFamily="@font/poppins_medium" />
+
+                <DatePicker
+                    android:id="@+id/datepickerBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/TxtViewAge"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"
+                    android:spinnersShown="true"/>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/TxtViewCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/datepickerBirthday"
+                    android:layout_marginHorizontal="20dp"
+
+                    android:text="@string/select_country"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:fontFamily="@font/poppins_medium" />
+
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/countryCodePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/TxtViewCountry"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/black_border"
+                    android:layout_marginVertical="10dp"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_showFlag="true"
+                    app:ccp_showNameCode="true"
+                    app:ccp_showFullName="true"/>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/PhoneNoEdtTxtLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/countryCodePicker"
+                    android:layout_marginHorizontal="20dp"
+                    app:endIconMode="clear_text"
+                    android:hint="@string/register_phone_no"
+                    app:expandedHintEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="@color/black"
+                    app:placeholderText="0717975397">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/EdtTxtPhoneNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/BtnContinue"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/PhoneNoEdtTxtLayout"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@color/blue"
+                    android:text="@string/_continue"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/TxtViewHaveAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/BtnContinue"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="2dp"
+                    android:text="@string/already_have_an_account"
+                    app:fontFamily="@font/poppins_regular" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/TxtViewSignUpHere"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/BtnContinue"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toEndOf="@+id/TxtViewHaveAccount"
+                    android:padding="2dp"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/blue"
+                    app:fontFamily="@font/poppins_regular" />
+
+
+
+
+
+            </RelativeLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
