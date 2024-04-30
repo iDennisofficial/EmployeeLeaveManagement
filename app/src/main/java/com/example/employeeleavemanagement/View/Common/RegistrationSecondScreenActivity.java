@@ -1,4 +1,4 @@
-package com.example.employeeleavemanagement.View;
+package com.example.employeeleavemanagement.View.Common;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.employeeleavemanagement.R;
 import com.google.android.material.button.MaterialButton;
 
-public class RegistrationActivity extends AppCompatActivity {
-
+public class RegistrationSecondScreenActivity extends AppCompatActivity {
 
     MaterialButton BtnContinue;
 
@@ -22,7 +21,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_registration_second_screen);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -30,13 +29,11 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
         BtnContinue = findViewById(R.id.BtnContinue);
-
         BtnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationActivity.this, RegistrationSecondScreenActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VerifyOTPActivity.class);
                 startActivity(intent);
-
             }
         });
     }

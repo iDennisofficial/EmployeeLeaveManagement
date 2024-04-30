@@ -15,13 +15,15 @@
     <string name="don_t_have_an_account">Don\'t have an Account?</string>
     <string name="sign_up">Sign Up</string>
 
-    //Registration Activity String
+    //Registration Activity String First screen
     <string name="create_an_account">Create an Account</string>
     <string name="register_name">Name</string>
     <string name="register_phone_no">Phone Number</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="repeat_password">Repeat password</string>
     <string name="_continue">Continue</string>
+
+    //Registration Activity String Second Screen
     <string name="choose_gender">Choose Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -29,14 +31,22 @@
     <string name="select_birthday">Select Birthday</string>
     <string name="select_country">Select Country</string>
     <string name="employee_id">Employee ID</string>
+
+    //VerifyOTP screen
     <string name="code">Co\nde</string>
     <string name="verification">Verification</string>
     <string name="enter_one_time_password_sent_on">Enter One Time Password sent on</string>
     <string name="_255717975397">+255717975397</string>
     <string name="verify_code">Verify code</string>
     <string name="phone_number_verification">Phone Number Verification</string>
+    <string name="Employee_name">Demetus Chilumanga</string>
+    <string name="employee_picture">Employee Picture</string>
+    <string name="Professional_title">Assistant Lecturer</string>
+    <string name="leave_history">Leave History</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="_10">10</string>
+    <string name="annual_calender">Annual Calender</string>
+    <string name="annual">Annual</string>
 
-
-    //VerifyOTP screen
 
 </resources>

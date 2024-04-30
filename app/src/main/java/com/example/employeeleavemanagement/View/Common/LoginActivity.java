@@ -1,8 +1,7 @@
-package com.example.employeeleavemanagement.View;
+package com.example.employeeleavemanagement.View.Common;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;

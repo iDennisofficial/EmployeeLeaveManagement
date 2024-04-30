@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.0"
 ccp = "2.5.0"
+gridlayout = "1.0.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -9,9 +10,15 @@ material = "1.11.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
 pinview = "1.4.4"
+googleServices = "4.4.1"
+firebaseAuth = "22.3.1"
+firebaseDatabase = "20.3.1"
+firebaseStorage = "20.3.0"
+firebaseFirestore = "24.11.0"
 
 [libraries]
 ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
+gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "gridlayout" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -20,6 +27,11 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 pinview = { module = "io.github.chaosleung:pinview", version.ref = "pinview" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

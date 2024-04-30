@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="accent">#2D056FE7</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#307EF4</color>
     <color name="grey">#A3A4A7</color>
+    <color name="chuoyellow">#ECEB2C</color>
+    <color name="chuobrown">#AD6322</color>
+    <color name="chuoblueish">#29669E</color>
+    <color name="chuoreddish">#EA5533</color>
+    <color name="chuored">#BB3233</color>
+    <color name="chuoblue">#056FE7</color>
 </resources>
