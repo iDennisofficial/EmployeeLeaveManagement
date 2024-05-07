@@ -50,11 +50,66 @@
                     android:textStyle="bold"
                     app:fontFamily="@font/poppins_bold" />
 
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/TxtViewChooseRole"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/TxtViewWelcome"
+                    android:layout_margin="20dp"
+                    android:text="Choose Your Role"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins_bold" />
+
+
+
+                <RadioGroup
+                    android:id="@+id/roleGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/TxtViewChooseRole"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/roleEmployee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/black"
+                        android:text="Employee"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/poppins_bold" />
+
+                    <RadioButton
+                        android:id="@+id/roleHod"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/black"
+                        android:text="HOD"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/poppins_bold" />
+
+                    <RadioButton
+                        android:id="@+id/roleHr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/black"
+                        android:text="HR"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/poppins_bold" />
+
+                </RadioGroup>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/EmailEdtTxtLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/TxtViewWelcome"
+                    android:layout_below="@+id/roleGroup"
                     android:layout_margin="20dp"
                     android:hint="@string/e_mail"
                     app:endIconMode="clear_text"
@@ -96,12 +151,28 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/TxtViewForgotPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/PasswordEdtTxtLayout"
+                    android:layout_marginStart="240dp"
+                    android:layout_marginTop="6dp"
+                    android:text="Forgot Password"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.841"
+                    app:layout_constraintStart_toStartOf="parent" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/BtnSignin"
                     style="@style/Widget.Material3.Button.ElevatedButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_below="@+id/PasswordEdtTxtLayout"
+                    android:layout_below="@+id/TxtViewForgotPassword"
                     android:layout_margin="18dp"
                     android:layout_marginHorizontal="80dp"
                     android:backgroundTint="@color/blue"
@@ -140,44 +211,14 @@
                     android:progress="100"
                     app:indicatorColor="@color/grey" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/CardViewFb"
-                    style="?attr/materialCardViewStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/FirstProgressBar"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="10dp"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardCornerRadius="8dp">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/TxtViewLoginFb"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/facebook"
-                        android:drawablePadding="20dp"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:paddingStart="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="@string/continue_with_facebook"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        app:fontFamily="@font/poppins_regular" />
-
-                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/CardViewGoogle"
                     style="?attr/materialCardViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/CardViewFb"
+                    android:layout_below="@id/FirstProgressBar"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="10dp"
                     android:checkable="true"

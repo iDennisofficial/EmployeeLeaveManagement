@@ -4,17 +4,18 @@
         android:id="@+id/item_1"
         android:enabled="true"
         android:icon="@drawable/home"
-        android:title="Home"/>
+        android:title=""/>
     <item
         android:id="@+id/item_2"
         android:enabled="true"
         android:icon="@drawable/applyleave"
-        android:title="Apply Leave"/>
+        android:title=""/>
 
 
     <item
         android:id="@+id/item_3"
         android:enabled="true"
+
         android:icon="@drawable/showallleave"
-        android:title="Show All Leave"/>
+        android:title=""/>
 </menu>
