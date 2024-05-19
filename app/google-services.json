@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "746770727118",
+    "project_id": "employeeleavemanagement-ad19d",
+    "storage_bucket": "employeeleavemanagement-ad19d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746770727118:android:34e73ca2494c531f4cd09f",
+        "android_client_info": {
+          "package_name": "com.example.employeeleavemanagement"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBniR7jFznlMN0xmFXZCkndgcien2tBEpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
