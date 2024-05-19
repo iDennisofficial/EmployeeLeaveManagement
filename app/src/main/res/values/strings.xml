@@ -30,7 +30,7 @@
     <string name="other">Other</string>
     <string name="select_birthday">Select Birthday</string>
     <string name="select_country">Select Country</string>
-    <string name="employee_id">Employee ID</string>
+    <string name="employee_id">Check Number</string>
 
     //VerifyOTP screen
     <string name="code">Co\nde</string>

@@ -15,6 +15,7 @@ firebaseAuth = "22.3.1"
 firebaseDatabase = "20.3.1"
 firebaseStorage = "20.3.0"
 firebaseFirestore = "24.11.0"
+googleGmsGoogleServices = "4.4.1"
 
 [libraries]
 ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
@@ -35,4 +36,5 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+googleGmsGoogleServices = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 

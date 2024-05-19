@@ -1,5 +1,7 @@
 package com.example.employeeleavemanagement.View.Employee;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -23,10 +25,14 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
             return insets;
         });
 
+
+
         //TODO:Adding background for the icons in the layout
 
         //TODO:Use the UI in the document folder to design admin views
         //TODO:OnReview, Reviewed, Cancelled
         //TODO:Waiting, Approved, Cancelled, njano, kijani ,nyekundu
     }
+
+
 }
