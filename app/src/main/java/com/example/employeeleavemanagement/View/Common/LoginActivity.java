@@ -4,10 +4,13 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -100,10 +103,39 @@ public class LoginActivity extends AppCompatActivity {
             String password = Objects.requireNonNull(EdtTxtPassword.getText()).toString();
             int selectedRoleId = roleGroup.getCheckedRadioButtonId();
 
-            if (email.isEmpty() || password.isEmpty()) {
-                AndroidUtil.ShowToast(this, "Please fill in all fields");
+
+
+            // Check if email is empty
+            if (TextUtils.isEmpty(email)) {
+                EdtTxtEmail.setError("Please enter an email address");
                 return;
             }
+
+// Check if email is in correct pattern
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                EdtTxtEmail.setError("Please enter a valid email address");
+                return;
+            }
+
+// Clear the error message for the email field
+            EdtTxtEmail.setError(null);
+
+// Check if password is empty
+            if (TextUtils.isEmpty(password)) {
+                EdtTxtPassword.setError("Please enter a password");
+                return;
+            }
+
+// Check if a radio button is selected
+            if (selectedRoleId == -1) {
+                AndroidUtil.ShowToast(this, "Please select a role");
+                return;
+            }
+
+            // Show the ProgressBar and disable the sign-in button
+            ProgressBar progressBar = findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            BtnSignin.setEnabled(false);
 
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -115,9 +147,13 @@ public class LoginActivity extends AppCompatActivity {
                                 assert user != null;
                                 String userId = user.getUid();
 
+                                progressBar.setVisibility(View.GONE);
+
                                 // Use the user ID to retrieve user data from Firestore
 
                                 AndroidUtil.ShowToast(LoginActivity.this, "Welcome back!");
+
+
                                 db.collection("employee").document(userId).get()
                                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                             @Override
@@ -125,9 +161,9 @@ public class LoginActivity extends AppCompatActivity {
                                                 if (task.isSuccessful()) {
                                                     DocumentSnapshot document = task.getResult();
                                                     if (document.exists()) {
-                                                        boolean isEmployee = document.getBoolean("Employee");
-                                                        boolean isHR = document.getBoolean("HR");
-                                                        boolean isHOD = document.getBoolean("HOD");
+                                                        boolean isEmployee = Boolean.TRUE.equals(document.getBoolean("Employee"));
+                                                        boolean isHR = Boolean.TRUE.equals(document.getBoolean("HR"));
+                                                        boolean isHOD = Boolean.TRUE.equals(document.getBoolean("HOD"));
 
                                                         RadioButton selectedRole = findViewById(selectedRoleId);
 
@@ -137,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {
+                                                                progressBar.setVisibility(View.GONE);
                                                                 AndroidUtil.ShowToast(LoginActivity.this, "You are not authorized to access this role");
                                                             }
                                                         } else if (selectedRole.getId() == R.id.roleHr) {
@@ -145,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {
+                                                                progressBar.setVisibility(View.GONE);
                                                                 AndroidUtil.ShowToast(LoginActivity.this, "You are not authorized to access this role");
                                                             }
                                                         } else if (selectedRole.getId() == R.id.roleHod) {
@@ -153,20 +191,25 @@ public class LoginActivity extends AppCompatActivity {
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {
+                                                                progressBar.setVisibility(View.GONE);
                                                                 AndroidUtil.ShowToast(LoginActivity.this, "You are not authorized to access this role");
                                                             }
                                                         } else {
+                                                            progressBar.setVisibility(View.GONE);
                                                             AndroidUtil.ShowToast(LoginActivity.this, "Please select a role");
                                                         }
                                                     } else {
+                                                        progressBar.setVisibility(View.GONE);
                                                         AndroidUtil.ShowToast(LoginActivity.this, "User not found");
                                                     }
                                                 } else {
+                                                    progressBar.setVisibility(View.GONE);
                                                     AndroidUtil.ShowToast(LoginActivity.this, "Failed to retrieve user data");
                                                 }
                                             }
                                         });
                             } else {
+                                progressBar.setVisibility(View.GONE);
                                 AndroidUtil.ShowToast(LoginActivity.this, "Login failed");
                             }
                         }

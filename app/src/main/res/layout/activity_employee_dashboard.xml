@@ -145,14 +145,14 @@
             app:layout_constraintTop_toBottomOf="@id/CardViewEmployeeInfo" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/TxtViewLeaveHistory"
+            android:id="@+id/TxtViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="185dp"
             android:layout_marginTop="10dp"
-            android:text="@string/leave_history"
+            android:text="Date"
             android:textColor="@color/blue"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:fontFamily="@font/poppins_medium"
             app:layout_constraintEnd_toEndOf="parent"
@@ -196,13 +196,15 @@
                         android:elevation="7dp"
                         android:focusable="true"
                         app:cardElevation="10dp"
+
                         app:cardCornerRadius="10dp">
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp">
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            >
 
                             <ImageView
                                 android:id="@+id/DashboardImage1"
@@ -281,7 +283,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="5dp">
 
                             <ImageView
@@ -361,7 +363,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="5dp">
 
                             <ImageView
@@ -453,7 +455,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="5dp">
 
                             <ImageView
@@ -533,7 +535,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="5dp">
 
                             <ImageView
@@ -613,7 +615,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="5dp">
 
                             <ImageView
@@ -793,15 +795,19 @@
         android:layout_marginBottom="10dp"
         >
 
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/nav_background"
             app:menu="@menu/bottom_navigation_menu"
             app:itemHorizontalTranslationEnabled="false"
-            />
+            app:itemIconSize="24dp"
+            app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+            app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"
+        />
+
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     

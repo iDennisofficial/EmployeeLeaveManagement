@@ -47,6 +47,10 @@
     <string name="_10">10</string>
     <string name="annual_calender">Annual Calender</string>
     <string name="annual">Annual</string>
+    <string name="title_activity_hello">Hello</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 
 </resources>

@@ -9,8 +9,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.employeeleavemanagement.R;
+import com.example.employeeleavemanagement.Utils.AndroidUtil;
+import com.google.android.material.textview.MaterialTextView;
 
 public class HoDDashBoard extends AppCompatActivity {
+
+    private MaterialTextView TxtViewDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +26,9 @@ public class HoDDashBoard extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        TxtViewDate = findViewById(R.id.TxtViewDate);
+        String formattedDate = AndroidUtil.getFormattedDate();
+        TxtViewDate.setText(formattedDate);
     }
 }

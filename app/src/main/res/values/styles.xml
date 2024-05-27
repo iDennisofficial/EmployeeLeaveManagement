@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BottomNavigationView">
+        <item name="android:background">@color/white</item>
+        <item name="android:elevation">8dp</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemIconTint">@color/blue</item>
+        <item name="itemTextColor">@color/blue</item>
+    </style>
+
+    <style name="BottomNavigationView.Active">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/chuoblue</item>
+    </style>
+
+    <style name="BottomNavigationView.Inactive">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/chuobrown</item>
+    </style>
+
+
+</resources>

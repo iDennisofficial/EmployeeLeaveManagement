@@ -117,7 +117,6 @@
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:hintTextColor="@color/black"
                     app:placeholderText="dennisdamas100@gmail.com">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -140,7 +139,6 @@
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:hintTextColor="@color/black"
                     app:placeholderText="**********">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -149,15 +147,24 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword" />
 
-
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/PasswordEdtTxtLayout"
+                    android:layout_marginTop="10dp"
+                    android:indeterminate="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/TxtViewForgotPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/PasswordEdtTxtLayout"
-                    android:layout_marginStart="240dp"
+                    android:layout_below="@+id/progressBar"
+                    android:layout_marginStart="230dp"
                     android:layout_marginTop="6dp"
                     android:text="Forgot Password"
                     android:textColor="@color/blue"
@@ -167,6 +174,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.841"
                     app:layout_constraintStart_toStartOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/TxtViewForgotPassword"
+                    android:layout_marginEnd="10dp"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/BtnSignin"

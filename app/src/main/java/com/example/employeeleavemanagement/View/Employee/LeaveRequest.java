@@ -1,7 +1,5 @@
 package com.example.employeeleavemanagement.View.Employee;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -11,36 +9,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.employeeleavemanagement.R;
-import com.example.employeeleavemanagement.Utils.AndroidUtil;
-import com.google.android.material.textview.MaterialTextView;
 
-public class EmployeeDashboardActivity extends AppCompatActivity {
-
-    private MaterialTextView TxtViewDate;
+public class LeaveRequest extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_employee_dashboard);
+        setContentView(R.layout.activity_leave_request);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        TxtViewDate = findViewById(R.id.TxtViewDate);
-        String formattedDate = AndroidUtil.getFormattedDate();
-        TxtViewDate.setText(formattedDate);
-
-
-
-
-        //TODO:Adding background for the icons in the layout
-
-        //TODO:Use the UI in the document folder to design admin views
-        //TODO:OnReview, Reviewed, Cancelled
-        //TODO:Waiting, Approved, Cancelled, njano, kijani ,nyekundu
     }
-
-
 }

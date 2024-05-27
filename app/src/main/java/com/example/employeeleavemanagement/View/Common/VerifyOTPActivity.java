@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.chaos.view.PinView;
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
-import com.example.employeeleavemanagement.View.Employee.EmployeeDashboardActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +28,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,13 +44,12 @@ public class VerifyOTPActivity extends AppCompatActivity {
     PinView PinViewVerifyOTP;
     ProgressBar progressBar;
 
-    String name , email,employeeID, password, gender, completePhoneNumber,completedBirthday, VerificationCode, userId;
+    String name, email, employeeID, password, gender, completePhoneNumber, completedBirthday, VerificationCode, userId;
 
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Long timeoutSeconds = 60L;
-    PhoneAuthProvider.ForceResendingToken  ResendingToken;
-
+    PhoneAuthProvider.ForceResendingToken ResendingToken;
 
 
     @Override
@@ -66,13 +65,13 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
 
         // Get the data from the previous intent
-         name = getIntent().getStringExtra("Name");
-         email = getIntent().getStringExtra("Email");
-         employeeID = getIntent().getStringExtra("EmployeeID");
-         password = getIntent().getStringExtra("Password");
-         gender = getIntent().getStringExtra("Gender");
-         completePhoneNumber = getIntent().getStringExtra("PhoneNumber");
-         completedBirthday = getIntent().getStringExtra("Birthday");
+        name = getIntent().getStringExtra("Name");
+        email = getIntent().getStringExtra("Email");
+        employeeID = getIntent().getStringExtra("EmployeeID");
+        password = getIntent().getStringExtra("Password");
+        gender = getIntent().getStringExtra("Gender");
+        completePhoneNumber = getIntent().getStringExtra("PhoneNumber");
+        completedBirthday = getIntent().getStringExtra("Birthday");
 
         BtnVerifyOTP = findViewById(R.id.BtnVerifyOTP);
         TxtViewVerifiedPhoneNo = findViewById(R.id.TxtViewVerifiedPhoneNo);
@@ -81,11 +80,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
         BtnResendOTP = findViewById(R.id.BtnResendOTP);
 
 
-
         TxtViewVerifiedPhoneNo.setText(completePhoneNumber);
 
 
-        sendOTP(completePhoneNumber,false);
+        sendOTP(completePhoneNumber, false);
 
         BtnVerifyOTP.setOnClickListener(v -> {
             String enteredOTP = PinViewVerifyOTP.getText().toString();
@@ -102,12 +100,12 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
         BtnResendOTP.setOnClickListener(v -> {
 
-            sendOTP(completePhoneNumber,true);
+            sendOTP(completePhoneNumber, true);
 
         });
     }
 
-    void  sendOTP( String phoneNumber, boolean isResend){
+    void sendOTP(String phoneNumber, boolean isResend) {
         startResendTimer();
         setInProgress(true);
         PhoneAuthOptions.Builder builder =
@@ -144,23 +142,21 @@ public class VerifyOTPActivity extends AppCompatActivity {
                             }
                         });
 
-        if(isResend){
+        if (isResend) {
             PhoneAuthProvider.verifyPhoneNumber(builder.setForceResendingToken(ResendingToken).build());
-        }
-        else {
+        } else {
             PhoneAuthProvider.verifyPhoneNumber(builder.build());
         }
 
     }
 
 
-    void setInProgress(boolean inProgress){
-        if(inProgress){
+    void setInProgress(boolean inProgress) {
+        if (inProgress) {
             BtnVerifyOTP.setVisibility(View.INVISIBLE);
             BtnResendOTP.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             BtnVerifyOTP.setVisibility(View.VISIBLE);
             BtnResendOTP.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
@@ -176,37 +172,70 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                    // Create a new user account with email and password
+                    // Check if phone number has been used before
+                    db.collection("employee").whereEqualTo("phoneNumber", completePhoneNumber)
+                            .get()
+                            .addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    if (!task1.getResult().isEmpty()) {
+                                        // Phone number has been used before, show error
+                                        AndroidUtil.ShowToast(getApplicationContext(), "Phone number is already in use");
+                                        return;
+                                    } else {
+                                        // Check if email has been used before
+                                        db.collection("employee").whereEqualTo("email", email)
+                                                .get()
+                                                .addOnCompleteListener(task11 -> {
+                                                    if (task11.isSuccessful()) {
+                                                        if (!task11.getResult().isEmpty()) {
+                                                            // Email has been used before, show error
+                                                            AndroidUtil.ShowToast(getApplicationContext(), "Email is already in use");
+                                                            return;
+                                                        } else {
+                                                            // Phone number and email have not been used before, proceed with creating user account
+                                                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<AuthResult> task11) {
+                                                                    if (task11.isSuccessful()) {
 
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+                                                                        userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                                                                        // The user account has been successfully created
+                                                                        Map<String, Object> employeeData = getEmployeeData();
+                                                                        db.collection("employee").document(userId).set(employeeData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                Intent intent = new Intent(VerifyOTPActivity.this, LoginActivity.class);
 
-                                userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                                // The user account has been successfully created
-                                Map<String, Object> employeeData = getEmployeeData();
-                                db.collection("employee").document(userId).set(employeeData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Intent intent = new Intent(VerifyOTPActivity.this, LoginActivity.class);
-
-                                        intent.putExtra("UserID", userId);
-                                        startActivity(intent);
-                                        finish();
+                                                                                intent.putExtra("UserID", userId);
+                                                                                startActivity(intent);
+                                                                                finish();
+                                                                            }
+                                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                AndroidUtil.ShowToast(getApplicationContext(), "Failed to upload data to Firestore");
+                                                                            }
+                                                                        });
+                                                                    } else {
+                                                                        // The user account creation has failed
+                                                                        AndroidUtil.ShowToast(getApplicationContext(), "Failed to create user account");
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    } else {
+                                                        // Error occurred while checking email
+                                                        AndroidUtil.ShowToast(getApplicationContext(), "Error occurred while checking email");
+                                                        return;
+                                                    }
+                                                });
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        AndroidUtil.ShowToast(getApplicationContext(), "Failed to upload data to Firestore");
-                                    }
-                                });
-                            } else {
-                                // The user account creation has failed
-                                AndroidUtil.ShowToast(getApplicationContext(), "Failed to create user account");
-                            }
-                        }
-                    });
+                                } else {
+                                    // Error occurred while checking phone number
+                                    AndroidUtil.ShowToast(getApplicationContext(), "Error occurred while checking phone number");
+                                    return;
+                                }
+                            });
                 } else {
                     AndroidUtil.ShowToast(getApplicationContext(), "OTP verification failed");
                 }
@@ -240,7 +269,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
     }
 
 
-    void startResendTimer(){
+    void startResendTimer() {
         BtnResendOTP.setEnabled(false);
 
         Timer timer = new Timer();
