@@ -1,40 +1,29 @@
 package com.example.employeeleavemanagement.View.Common;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
-import com.example.employeeleavemanagement.View.Employee.EmployeeDashboardActivity;
+import com.example.employeeleavemanagement.View.Employee.EmployeeMainDashboardActivity;
 import com.example.employeeleavemanagement.View.HOD.HoDDashBoard;
 import com.example.employeeleavemanagement.View.HR.HRDashboard;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -169,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                         if (selectedRole.getId() == R.id.roleEmployee) {
                                                             if (isEmployee) {
-                                                                Intent intent = new Intent(LoginActivity.this, EmployeeDashboardActivity.class);
+                                                                Intent intent = new Intent(LoginActivity.this, EmployeeMainDashboardActivity.class);
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {
