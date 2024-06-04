@@ -31,12 +31,16 @@ The Leave Management Application offers an automated and user-friendly solution 
 
  Technology Stack
 - Frontend: Android
-- Backend: TBD ( Firebase, Laravel )
+- Backend:  ( Firebase, )
 - Version Control: Git (Hosted on GitHub)
 
- Contributors
+ Participants
+ Group members
 - Dennis D. Mtema
 - Demetus M. Chilumanga
+
+- 
+  Under supervisor
 - Mr Eric R. Samwi
 
 
