@@ -117,11 +117,8 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         // Check for employee ID format
-        String employeeIDPattern = "^MoCU/STAFF/\\d{4}$";
-        Pattern employeePattern = Pattern.compile(employeeIDPattern);
-        Matcher employeeMatcher = employeePattern.matcher(employeeID);
-        if (!employeeMatcher.matches()) {
-            employeeIdEdtTxt.setError("Please enter a valid employee ID in the format MoCU/STAFF/9999");
+        if (employeeID.length()!= 14 ||!employeeID.matches("\\d+")) {
+            employeeIdEdtTxt.setError("Please enter a valid Check Number");
             return false;
         }
 

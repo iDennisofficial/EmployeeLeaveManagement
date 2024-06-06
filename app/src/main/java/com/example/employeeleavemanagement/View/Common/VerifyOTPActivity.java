@@ -52,6 +52,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
     PhoneAuthProvider.ForceResendingToken ResendingToken;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -112,7 +112,7 @@
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/black"
-                    app:placeholderText="MoCU-STAFF-9999">
+                    app:placeholderText="19387465378295">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtEmployeeID"

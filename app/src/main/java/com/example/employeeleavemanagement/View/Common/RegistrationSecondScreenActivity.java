@@ -22,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.employeeleavemanagement.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 import com.hbb20.CountryCodePicker;
 
 import java.text.BreakIterator;
@@ -34,6 +35,7 @@ public class RegistrationSecondScreenActivity extends AppCompatActivity {
     String gender;
     String completedBirthday;
     String completePhoneNumber;
+    MaterialTextView TxtViewSignUpHere;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,15 @@ public class RegistrationSecondScreenActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        TxtViewSignUpHere = findViewById(R.id.TxtViewSignUpHere);
+
+        TxtViewSignUpHere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegistrationSecondScreenActivity.this, LoginActivity.class);
+            }
         });
 
         BtnContinue = findViewById(R.id.BtnContinue);

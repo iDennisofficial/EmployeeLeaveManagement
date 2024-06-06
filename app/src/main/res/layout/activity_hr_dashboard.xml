@@ -183,9 +183,8 @@
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
-
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/CardViewAnnual"
+                            android:id="@+id/CardViewRequests"
                             style="?attr/materialCardViewStyle"
                             android:layout_width="0dp"
                             android:layout_height="150dp"
@@ -198,29 +197,38 @@
                             app:cardElevation="10dp"
                             app:cardCornerRadius="10dp">
 
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_margin="5dp">
 
-                                <ImageView
-                                    android:id="@+id/DashboardImage1"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_marginTop="10dp"
-                                    android:contentDescription="@string/annual_calender"
-                                    android:src="@drawable/leaverequest"
+                                <View
+                                    android:id="@+id/backgroundViewRequests"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/chuoblue_bg"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"/>
 
+                                <ImageView
+                                    android:id="@+id/DashboardImageAnnual"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:contentDescription="@string/annual_calender"
+                                    android:src="@drawable/leaverequest"
+                                    android:layout_marginTop="1dp"
+                                    app:layout_constraintStart_toStartOf="@id/backgroundViewRequests"
+                                    app:layout_constraintTop_toTopOf="@id/backgroundViewRequests"
+                                    app:layout_constraintEnd_toEndOf="@id/backgroundViewRequests"
+                                    app:layout_constraintBottom_toBottomOf="@id/backgroundViewRequests"
+                                    app:tint="@color/white" />
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays"
+                                    android:id="@+id/TextViewLeaveRequests"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
                                     android:text="20"
                                     android:textColor="@color/black"
@@ -228,7 +236,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/DashboardImage1"
+                                    app:layout_constraintTop_toBottomOf="@id/DashboardImageAnnual"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -250,7 +258,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/CardViewSick"
+                            android:id="@+id/CardViewApproved"
                             style="?attr/materialCardViewStyle"
                             android:layout_width="0dp"
                             android:layout_height="150dp"
@@ -263,29 +271,38 @@
                             app:cardElevation="10dp"
                             app:cardCornerRadius="10dp">
 
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_margin="5dp">
 
-                                <ImageView
-                                    android:id="@+id/DashboardImage2"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:contentDescription="@string/annual_calender"
-                                    android:src="@drawable/reviewed"
-                                    android:layout_marginTop="10dp"
+                                <View
+                                    android:id="@+id/backgroundViewSick"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/chuobrown_bg"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"/>
 
+                                <ImageView
+                                    android:id="@+id/DashboardImageSick"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:contentDescription="@string/annual_calender"
+                                    android:src="@drawable/reviewed"
+                                    android:layout_marginTop="1dp"
+                                    app:layout_constraintStart_toStartOf="@id/backgroundViewSick"
+                                    app:layout_constraintTop_toTopOf="@id/backgroundViewSick"
+                                    app:layout_constraintEnd_toEndOf="@id/backgroundViewSick"
+                                    app:layout_constraintBottom_toBottomOf="@id/backgroundViewSick"
+                                    app:tint="@color/white" />
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays2"
+                                    android:id="@+id/TextViewLeaveApproved"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
                                     android:text="7"
                                     android:textColor="@color/black"
@@ -293,7 +310,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/DashboardImage2"
+                                    app:layout_constraintTop_toBottomOf="@id/DashboardImageSick"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -314,9 +331,6 @@
 
                         </com.google.android.material.card.MaterialCardView>
 
-
-
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -327,9 +341,8 @@
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
-
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/CardViewMaternity"
+                            android:id="@+id/CardViewCancelled"
                             style="?attr/materialCardViewStyle"
                             android:layout_width="0dp"
                             android:layout_height="150dp"
@@ -342,29 +355,38 @@
                             app:cardElevation="10dp"
                             app:cardCornerRadius="10dp">
 
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_margin="5dp">
 
-                                <ImageView
-                                    android:id="@+id/DashboardImage4"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:contentDescription="@string/annual_calender"
-                                    android:src="@drawable/leavecancelled"
-                                    android:layout_marginTop="10dp"
+                                <View
+                                    android:id="@+id/backgroundViewMaternity"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/chuored_bg"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"/>
 
+                                <ImageView
+                                    android:id="@+id/DashboardImageMaternity"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:contentDescription="@string/annual_calender"
+                                    android:src="@drawable/leavecancelled"
+                                    android:layout_marginTop="1dp"
+                                    app:layout_constraintStart_toStartOf="@id/backgroundViewMaternity"
+                                    app:layout_constraintTop_toTopOf="@id/backgroundViewMaternity"
+                                    app:layout_constraintEnd_toEndOf="@id/backgroundViewMaternity"
+                                    app:layout_constraintBottom_toBottomOf="@id/backgroundViewMaternity"
+                                    app:tint="@color/white" />
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays4"
+                                    android:id="@+id/TextViewLeaveCancelled"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
                                     android:text="30"
                                     android:textColor="@color/black"
@@ -372,7 +394,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/DashboardImage4"
+                                    app:layout_constraintTop_toBottomOf="@id/DashboardImageMaternity"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -394,7 +416,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/CardViewPaternity"
+                            android:id="@+id/CardViewOnleave"
                             style="?attr/materialCardViewStyle"
                             android:layout_width="0dp"
                             android:layout_height="150dp"
@@ -407,29 +429,38 @@
                             app:cardElevation="10dp"
                             app:cardCornerRadius="10dp">
 
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_margin="5dp">
 
-                                <ImageView
-                                    android:id="@+id/DashboardImage5"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:contentDescription="@string/annual_calender"
-                                    android:src="@drawable/allowedonleave"
-                                    android:layout_marginTop="10dp"
+                                <View
+                                    android:id="@+id/backgroundViewPaternity"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/chuoyellow_bg"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"/>
 
+                                <ImageView
+                                    android:id="@+id/DashboardImagePaternity"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:contentDescription="@string/annual_calender"
+                                    android:src="@drawable/allowedonleave"
+                                    android:layout_marginTop="1dp"
+                                    app:layout_constraintStart_toStartOf="@id/backgroundViewPaternity"
+                                    app:layout_constraintTop_toTopOf="@id/backgroundViewPaternity"
+                                    app:layout_constraintEnd_toEndOf="@id/backgroundViewPaternity"
+                                    app:layout_constraintBottom_toBottomOf="@id/backgroundViewPaternity"
+                                    app:tint="@color/white" />
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays5"
+                                    android:id="@+id/TextViewOnLeave"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
                                     android:text="4"
                                     android:textColor="@color/black"
@@ -437,7 +468,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/DashboardImage5"
+                                    app:layout_constraintTop_toBottomOf="@id/DashboardImagePaternity"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -457,11 +488,6 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </com.google.android.material.card.MaterialCardView>
-
-
-
-
-
 
                     </LinearLayout>
 
@@ -506,13 +532,26 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:background="@drawable/gradient_background"
-                    android:padding="16dp">
+                    android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/profileImageView"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/idennisofficial" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/CardViewCircularProfileImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="100dp">
+
+                        <ImageView
+                            android:id="@+id/profileImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:contentDescription="@string/employee_picture"
+                            android:padding="1dp"
+                            android:src="@drawable/idennisofficial" />
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -583,6 +622,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
+                android:layout_marginHorizontal="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/TxtViewToday">
@@ -602,34 +642,41 @@
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp">
 
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_margin="5dp">
 
+                        <View
+                            android:id="@+id/backgroundView"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/white_round_bg"
+                            android:layout_marginTop="-10dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/TextViewPresent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="1dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text="@string/_10"
-                            android:textColor="@color/black"
+                            android:textColor="@color/chuoblue"
                             android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.494"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.162" />
+                            app:layout_constraintTop_toTopOf="@id/backgroundView"
+                            app:layout_constraintBottom_toBottomOf="@id/backgroundView"
+                            app:layout_constraintStart_toStartOf="@id/backgroundView"
+                            app:layout_constraintEnd_toEndOf="@id/backgroundView" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/TextviewPresent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="50dp"
+                            android:layout_marginTop="80dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text="Present"
                             android:textColor="@color/black"
@@ -657,34 +704,41 @@
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp">
 
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_margin="5dp">
 
+                        <View
+                            android:id="@+id/backgroundViewAbsent"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="-10dp"
+                            android:background="@drawable/white_round_bg"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/TextViewAbsent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="1dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text="@string/_10"
-                            android:textColor="@color/black"
+                            android:textColor="@color/chuored"
                             android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.494"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.162" />
+                            app:layout_constraintTop_toTopOf="@id/backgroundViewAbsent"
+                            app:layout_constraintBottom_toBottomOf="@id/backgroundViewAbsent"
+                            app:layout_constraintStart_toStartOf="@id/backgroundViewAbsent"
+                            app:layout_constraintEnd_toEndOf="@id/backgroundViewAbsent" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/TextviewAbsent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="50dp"
+                            android:layout_marginTop="80dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text="Absent"
                             android:textColor="@color/black"
@@ -712,34 +766,41 @@
                     app:cardElevation="10dp"
                     app:cardCornerRadius="10dp">
 
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_margin="5dp">
 
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/TextViewOnLeave"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:text="@string/_10"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.494"
+                        <View
+                            android:id="@+id/backgroundViewOnLeave"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/white_round_bg"
+                            android:layout_marginTop="-10dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.162" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/TextViewEmployeeOnLeave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/_10"
+                            android:textColor="@color/chuoyellow"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="@id/backgroundViewOnLeave"
+                            app:layout_constraintBottom_toBottomOf="@id/backgroundViewOnLeave"
+                            app:layout_constraintStart_toStartOf="@id/backgroundViewOnLeave"
+                            app:layout_constraintEnd_toEndOf="@id/backgroundViewOnLeave" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/TextviewOnLeave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="50dp"
+                            android:layout_marginTop="80dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text="On Leave"
                             android:textColor="@color/black"
