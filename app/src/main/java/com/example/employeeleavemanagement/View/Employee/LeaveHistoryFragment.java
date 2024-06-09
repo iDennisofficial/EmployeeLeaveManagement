@@ -3,64 +3,88 @@ package com.example.employeeleavemanagement.View.Employee;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.employeeleavemanagement.Controller.Employee.HistoryViewPagerAdapter;
 import com.example.employeeleavemanagement.R;
+import com.google.android.material.tabs.TabLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LeaveHistoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Objects;
+
 public class LeaveHistoryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public LeaveHistoryFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LeaveHistoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LeaveHistoryFragment newInstance(String param1, String param2) {
-        LeaveHistoryFragment fragment = new LeaveHistoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    TabLayout tabLayout;
+    ViewPager2 tabviewPager;
+    HistoryViewPagerAdapter historyViewPagerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_leave_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_leave_history, container, false);
+
+        tabLayout = view.findViewById(R.id.tabLayout);
+        tabviewPager = view.findViewById(R.id.tabviewPager);
+
+        historyViewPagerAdapter = new HistoryViewPagerAdapter(this);
+
+        tabviewPager.setAdapter(historyViewPagerAdapter);
+
+        // Set default background color for all tabs
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.view.setBackgroundColor(getResources().getColor(R.color.white));
+        }
+
+        // Set the first tab to red
+        Objects.requireNonNull(tabLayout.getTabAt(0)).view.setBackgroundColor(getResources().getColor(R.color.chuoyellow));
+
+        tabLayout.setTabTextColors(getResources().getColor(R.color.black), getResources().getColor(R.color.white));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                switch (position) {
+                    case 0:
+                        Objects.requireNonNull(tabLayout.getTabAt(position)).view.setBackgroundColor(getResources().getColor(R.color.chuoyellow));
+                        break;
+                    case 1:
+                        Objects.requireNonNull(tabLayout.getTabAt(position)).view.setBackgroundColor(getResources().getColor(R.color.green));
+                        break;
+                    case 2:
+                        Objects.requireNonNull(tabLayout.getTabAt(position)).view.setBackgroundColor(getResources().getColor(R.color.chuored));
+                        break;
+                }
+
+                // Add this line to select the corresponding page in the view pager
+                tabviewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Reset the background color of the unselected tab
+                tab.view.setBackgroundColor(getResources().getColor(R.color.white));
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        tabviewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                Objects.requireNonNull(tabLayout.getTabAt(position)).select();
+            }
+        });
+
+        return view;
     }
 }

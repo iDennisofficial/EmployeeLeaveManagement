@@ -167,81 +167,32 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
     void signIn(PhoneAuthCredential phoneAuthCredential) {
         setInProgress(true);
-        mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                setInProgress(false);
-                if (task.isSuccessful()) {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                    // Check if phone number has been used before
-                    db.collection("employee").whereEqualTo("phoneNumber", completePhoneNumber)
-                            .get()
-                            .addOnCompleteListener(task1 -> {
-                                if (task1.isSuccessful()) {
-                                    if (!task1.getResult().isEmpty()) {
-                                        // Phone number has been used before, show error
-                                        AndroidUtil.ShowToast(getApplicationContext(), "Phone number is already in use");
-                                        return;
-                                    } else {
-                                        // Check if email has been used before
-                                        db.collection("employee").whereEqualTo("email", email)
-                                                .get()
-                                                .addOnCompleteListener(task11 -> {
-                                                    if (task11.isSuccessful()) {
-                                                        if (!task11.getResult().isEmpty()) {
-                                                            // Email has been used before, show error
-                                                            AndroidUtil.ShowToast(getApplicationContext(), "Email is already in use");
-                                                            return;
-                                                        } else {
-                                                            // Phone number and email have not been used before, proceed with creating user account
-                                                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<AuthResult> task11) {
-                                                                    if (task11.isSuccessful()) {
-
-                                                                        userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                                                                        // The user account has been successfully created
-                                                                        Map<String, Object> employeeData = getEmployeeData();
-                                                                        db.collection("employee").document(userId).set(employeeData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                            @Override
-                                                                            public void onSuccess(Void aVoid) {
-                                                                                Intent intent = new Intent(VerifyOTPActivity.this, LoginActivity.class);
-
-                                                                                intent.putExtra("UserID", userId);
-                                                                                startActivity(intent);
-                                                                                finish();
-                                                                            }
-                                                                        }).addOnFailureListener(new OnFailureListener() {
-                                                                            @Override
-                                                                            public void onFailure(@NonNull Exception e) {
-                                                                                AndroidUtil.ShowToast(getApplicationContext(), "Failed to upload data to Firestore");
-                                                                            }
-                                                                        });
-                                                                    } else {
-                                                                        // The user account creation has failed
-                                                                        AndroidUtil.ShowToast(getApplicationContext(), "Failed to create user account");
-                                                                    }
-                                                                }
-                                                            });
-                                                        }
-                                                    } else {
-                                                        // Error occurred while checking email
-                                                        AndroidUtil.ShowToast(getApplicationContext(), "Error occurred while checking email");
-                                                        return;
-                                                    }
-                                                });
-                                    }
-                                } else {
-                                    // Error occurred while checking phone number
-                                    AndroidUtil.ShowToast(getApplicationContext(), "Error occurred while checking phone number");
-                                    return;
-                                }
-                            });
-                } else {
-                    AndroidUtil.ShowToast(getApplicationContext(), "OTP verification failed");
-                }
+        mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(task -> {
+            setInProgress(false);
+            if (task.isSuccessful()) {
+                // Create a new user account
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task11 -> {
+                    if (task11.isSuccessful()) {
+                        userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                        // The user account has been successfully created
+                        Map<String, Object> employeeData = getEmployeeData();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("employee").document(userId).set(employeeData).addOnSuccessListener(aVoid -> {
+                            Intent intent = new Intent(VerifyOTPActivity.this, LoginActivity.class);
+                            intent.putExtra("UserID", userId);
+                            startActivity(intent);
+                            finish();
+                        }).addOnFailureListener(e -> AndroidUtil.ShowToast(getApplicationContext(), "Failed to upload data to Firestore"));
+                    } else {
+                        // The user account creation has failed
+                        AndroidUtil.ShowToast(getApplicationContext(), "Failed to create user account");
+                    }
+                });
+            } else {
+                AndroidUtil.ShowToast(getApplicationContext(), "OTP verification failed");
             }
+        });
+    }
 
             @NonNull
             private Map<String, Object> getEmployeeData() {
@@ -267,8 +218,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
                 return employeeData;
             }
-        });
-    }
+
+
 
 
     void startResendTimer() {

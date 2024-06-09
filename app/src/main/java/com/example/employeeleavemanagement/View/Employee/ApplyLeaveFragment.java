@@ -21,39 +21,8 @@ import java.util.Objects;
 
 public class ApplyLeaveFragment extends Fragment {
 
-    String selectedValue;
+    String selectedLeave, selectedDepartment;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ApplyLeaveFragment() {
-        // Required empty public constructor
-    }
-
-
-    public static ApplyLeaveFragment newInstance(String param1, String param2) {
-        ApplyLeaveFragment fragment = new ApplyLeaveFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments()!= null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,31 +34,56 @@ public class ApplyLeaveFragment extends Fragment {
         TextInputEditText endDateEditText = view.findViewById(R.id.end_date_edit_text);
 
         Spinner leaveTypeSpinner = view.findViewById(R.id.leave_type_spinner);
+        Spinner departmentSpinner = view.findViewById(R.id.department_spinner);
+        TextInputLayout department_layout = view.findViewById(R.id.department_layout);
         TextInputLayout leaveTypeLayout = view.findViewById(R.id.leave_type_layout);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireActivity(),
+        ArrayAdapter<CharSequence> leavetypeadapter = ArrayAdapter.createFromResource(requireActivity(),
                 R.array.leave_types, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        leaveTypeSpinner.setAdapter(adapter);
+        leavetypeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        leaveTypeSpinner.setAdapter(leavetypeadapter);
+
+        ArrayAdapter<CharSequence> departmentadapter = ArrayAdapter.createFromResource(requireActivity(),
+                R.array.fbis_department, android.R.layout.simple_spinner_item);
+        departmentadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        departmentSpinner.setAdapter(departmentadapter);
+
+
+        leaveTypeSpinner.setPrompt("Leave Type");
+        departmentSpinner.setPrompt("Department");
+
+        leaveTypeLayout.setError("Please select a Leave Type");
+        department_layout.setError("Please select a department");
 
         leaveTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    // Display error when the user selects the first item (prompt)
-                    leaveTypeLayout.setError("Please select a leave type");
-                } else {
-                    // Get the selected value and remove error
-                    selectedValue = parent.getItemAtPosition(position).toString();
+                if (position > 0) {
                     leaveTypeLayout.setError(null);
-                    // Do something with the selected value
-                    Toast.makeText(getActivity(), "Selected value: " + selectedValue, Toast.LENGTH_SHORT).show();
+                } else {
+                    leaveTypeLayout.setError("Please select a Leave Type");
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Do something when the user does not select any item
+                leaveTypeLayout.setError("Please select a Leave Type");
+            }
+        });
+
+        departmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    department_layout.setError(null);
+                } else {
+                    department_layout.setError("Please select a department");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                department_layout.setError("Please select a department");
             }
         });
 

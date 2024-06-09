@@ -70,6 +70,28 @@
                         android:inputType="phone" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/department_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/black_border"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="10dp"
+                    app:errorEnabled="true"
+                    android:hint="Select a department">
+
+                    <Spinner
+                        android:id="@+id/department_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:spinnerMode="dialog" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/leave_type_layout"
                     android:layout_width="match_parent"
@@ -79,12 +101,15 @@
                     android:paddingHorizontal="10dp"
                     android:layout_marginTop="7dp"
                     android:layout_marginBottom="10dp"
-                    app:errorEnabled="true">
+                    app:errorEnabled="true"
+                    android:hint="Select a leave type">
+
                     <Spinner
                         android:id="@+id/leave_type_spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:prompt="@string/leave_type_prompt" />
+                        android:layout_height="match_parent"
+                        android:spinnerMode="dialog" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
 

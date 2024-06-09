@@ -54,6 +54,7 @@
 
 
     <string-array name="leave_types">
+        <item>Select Leave Type</item>
         <item>Annual Leave</item>
         <item>Sick Leave</item>
         <item>Sabbatical Leave</item>
@@ -63,6 +64,20 @@
     </string-array>
 
     <string name="leave_type_prompt">Leave Type</string>
+
+    <string-array name="fbis_department">
+        <item>Select Department</item>
+        <item>Department of Law</item>
+        <item>Department of Accounting and Finance</item>
+        <item>Department of Microfinance and Banking</item>
+        <item>Department of Marketing and Enterprise Management</item>
+        <item>Department of Information and Communication Technology</item>
+        <item>Department of Procurement and Supply Chain Management</item>
+        <item>Department of Human Capital Management and Administration</item>
+    </string-array>
+
+
+    <string name="department_prompt">Department</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

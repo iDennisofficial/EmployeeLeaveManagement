@@ -11,16 +11,15 @@ import android.view.ViewGroup;
 import com.example.employeeleavemanagement.R;
 
 
-public class DashboardFragment extends Fragment {
+public class CancelledFragment extends Fragment {
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
-
+        View view = inflater.inflate(R.layout.fragment_cancelled, container, false);
 
         return view;
     }
