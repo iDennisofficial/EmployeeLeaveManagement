@@ -1,5 +1,7 @@
 package com.example.employeeleavemanagement.View.Employee;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,12 +25,24 @@ public class ApplyLeaveFragment extends Fragment {
 
     String selectedLeave, selectedDepartment;
 
+    String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
+        // Load the employee information from SharedPreferences
+        Gender = sharedPreferences.getString("gender", "");
+        PhoneNumber = sharedPreferences.getString("phoneNumber", "");
+        Birthday = sharedPreferences.getString("birthday", "");
+        Password = sharedPreferences.getString("password", "");
+        Email = sharedPreferences.getString("email", "");
+        EmployeeID = sharedPreferences.getString("employeeID", "");
+        Name = sharedPreferences.getString("name", "");
 
         TextInputEditText startDateEditText = view.findViewById(R.id.start_date_edit_text);
         TextInputEditText endDateEditText = view.findViewById(R.id.end_date_edit_text);

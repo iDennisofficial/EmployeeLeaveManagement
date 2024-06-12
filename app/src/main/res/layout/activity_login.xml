@@ -117,7 +117,7 @@
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:placeholderText="dennisdamas100@gmail.com">
+                    app:placeholderText="someone@gmail.com">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtEmail"
@@ -138,8 +138,7 @@
                     app:endIconMode="password_toggle"
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
-                    app:hintEnabled="true"
-                    app:placeholderText="**********">
+                    app:hintEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtPassword"

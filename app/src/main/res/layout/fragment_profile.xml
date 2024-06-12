@@ -54,7 +54,7 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textViewName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                         app:layout_constraintStart_toStartOf="@+id/CardViewCircularProfileImg"
                         app:layout_constraintTop_toBottomOf="@+id/CardViewCircularProfileImg" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textViewEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -230,17 +230,17 @@
                             android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_medium"
-                                android:text="Password"
+                                android:text="Gender:"
                                 android:textColor="@color/chuoblue"
                                 android:textSize="18sp" />
 
-                            <TextView
-                                android:id="@+id/password_textView"
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/gender_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -266,22 +266,22 @@
                             android:layout_margin="10dp"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_medium"
-                                android:text="Mobile:"
+                                android:text="Birthday:"
                                 android:textColor="@color/chuoblue"
                                 android:textSize="18sp" />
 
-                            <TextView
-                                android:id="@+id/mobile_textView"
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/birthday_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="+255717975397"
+                                android:text="18/12/1999"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -303,17 +303,17 @@
                             android:layout_margin="10dp"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_medium"
-                                android:text="Tel:"
+                                android:text="Phone:"
                                 android:textColor="@color/chuoblue"
                                 android:textSize="18sp" />
 
-                            <TextView
-                                android:id="@+id/tel_textView"
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/phone_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -340,7 +340,44 @@
                             android:layout_margin="10dp"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="CheckNo:"
+                                android:textColor="@color/chuoblue"
+                                android:textSize="18sp" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/checkno_textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="12376389209376"
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="6dp"
+                            android:background="@color/grey" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -349,7 +386,7 @@
                                 android:textColor="@color/chuoblue"
                                 android:textSize="18sp" />
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/address_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -377,7 +414,7 @@
                             android:layout_margin="10dp"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -386,7 +423,7 @@
                                 android:textColor="@color/chuoblue"
                                 android:textSize="18sp" />
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/postal_code_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -405,13 +442,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/edit_profile_button"
+                android:id="@+id/log_out_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"
                 android:fontFamily="@font/poppins_bold"
                 android:textSize="18sp"
-                android:text="Edit Profile"
+                android:text="SIGN OUT"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/chuoblue"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>

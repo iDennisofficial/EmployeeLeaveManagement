@@ -1,6 +1,8 @@
 package com.example.employeeleavemanagement.View.Common;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -88,6 +90,13 @@ public class LoginActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         BtnSignin.setOnClickListener(v -> {
+
+            SharedPreferences sharedPreferences = this.getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+
+
             String email = Objects.requireNonNull(EdtTxtEmail.getText()).toString();
             String password = Objects.requireNonNull(EdtTxtPassword.getText()).toString();
             int selectedRoleId = roleGroup.getCheckedRadioButtonId();

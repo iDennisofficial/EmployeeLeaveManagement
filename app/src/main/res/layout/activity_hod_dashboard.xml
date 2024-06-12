@@ -90,8 +90,8 @@
                         android:id="@+id/TextViewEmployeeName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/CardViewCircularEmployeeImg"
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/Employee_name"
@@ -99,31 +99,19 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/bell_Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="60dp"
-                        android:layout_marginTop="10dp"
-                        android:contentDescription="Bell icon"
-                        android:backgroundTint="@color/cardview_light_background"
-                        android:layout_toEndOf="@id/TextViewEmployeeName"
-                        app:icon="@drawable/notifications_bell"
-                        app:iconGravity="textStart"
-                        app:iconSize="30dp"
-                        app:iconTint="@color/black" />
+
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/TextViewEmployeeProfession"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/TextViewEmployeeName"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_toEndOf="@id/CardViewCircularEmployeeImg"
                         android:fontFamily="@font/poppins_medium"
                         android:includeFontPadding="false"
-                        android:text="@string/Professional_title"
+                        android:text="@string/Professional_title_hod"
                         android:textColor="@color/grey" />
 
 
@@ -234,7 +222,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:text="20"
+                                    android:text="0"
                                     android:textColor="@color/black"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -308,7 +296,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:text="7"
+                                    android:text="0"
                                     android:textColor="@color/black"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -396,7 +384,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:text="30"
+                                    android:text="0"
                                     android:textColor="@color/black"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -470,7 +458,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:text="4"
+                                    android:text="0"
                                     android:textColor="@color/black"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -677,7 +665,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="@string/_10"
+                            android:text="40"
                             android:textColor="@color/chuoblue"
                             android:textSize="18sp"
 
@@ -740,7 +728,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="@string/_10"
+                            android:text="0"
                             android:textColor="@color/chuored"
                             android:textSize="18sp"
 
@@ -803,7 +791,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="@string/_10"
+                            android:text="0"
                             android:textColor="@color/chuoyellow"
                             android:textSize="18sp"
 

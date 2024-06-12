@@ -155,7 +155,7 @@
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/black"
-                    app:placeholderText="0717975397">
+                    app:placeholderText="0717******">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtPhoneNo"

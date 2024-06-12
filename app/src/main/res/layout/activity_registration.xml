@@ -63,8 +63,7 @@
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:hintTextColor="@color/black"
-                    app:placeholderText="Dennis Damas">
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtName"
@@ -88,7 +87,7 @@
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/black"
-                    app:placeholderText="dennisdamas100@gmail.com">
+                    app:placeholderText="someone@gmail.com">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtEmail"
@@ -112,7 +111,7 @@
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
                     app:hintTextColor="@color/black"
-                    app:placeholderText="19387465378295">
+                    app:placeholderText="1938**********">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtEmployeeID"
@@ -136,8 +135,7 @@
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:hintTextColor="@color/black"
-                    app:placeholderText="***********">
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtPassword"
@@ -160,8 +158,7 @@
                     app:expandedHintEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:hintTextColor="@color/black"
-                    app:placeholderText="***********">
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EdtTxtRepeatPassword"

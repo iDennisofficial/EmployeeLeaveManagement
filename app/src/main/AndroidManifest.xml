@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.EmployeeLeaveManagement"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".View.Common.HoDRProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".View.HR.HRDashboard"
             android:exported="false" />
@@ -24,7 +25,6 @@
             android:exported="false" />
         <activity
             android:name=".View.Employee.EmployeeMainDashboardActivity"
-
             android:exported="false" />
         <activity
             android:name=".View.Common.VerifyOTPActivity"
@@ -37,7 +37,6 @@
             android:exported="false" />
         <activity
             android:name=".View.Common.LoginActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
