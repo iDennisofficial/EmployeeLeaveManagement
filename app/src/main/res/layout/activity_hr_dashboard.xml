@@ -14,6 +14,7 @@
         app:menu="@menu/top_app_bar"
         android:layout_marginTop="20dp"
         app:navigationIcon="@drawable/arrow_back"
+        app:liftOnScroll="true"
         app:navigationIconTint="@color/black" >
 
         <TextView

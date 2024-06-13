@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.employeeleavemanagement.R;
+import com.example.employeeleavemanagement.Utils.AndroidUtil;
 import com.example.employeeleavemanagement.View.Common.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -67,6 +68,8 @@ public class ProfileFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
+
+                AndroidUtil.ShowToast(getContext(), "Goodbye " + Name);
 
                 // Start the Login Activity
                 Intent intent = new Intent(getActivity(), LoginActivity.class);

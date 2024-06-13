@@ -13,11 +13,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.employeeleavemanagement.R;
-import com.example.employeeleavemanagement.View.Common.LoginActivity;
+import com.example.employeeleavemanagement.Utils.AndroidUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
-public class HoDRProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
     MaterialTextView textViewName, textViewEmail, gender_textView, birthday_textView, phone_textView, checkno_textView;
@@ -27,14 +27,11 @@ public class HoDRProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_hod_hr_profile);
-
+        setContentView(R.layout.activity_profile);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-
-
         });
 
         SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
@@ -71,8 +68,10 @@ public class HoDRProfileActivity extends AppCompatActivity {
                 editor.clear();
                 editor.apply();
 
+                AndroidUtil.ShowToast(getApplicationContext(), "Goodbye " + Name);
+
                 // Start the Login Activity
-                Intent intent = new Intent(HoDRProfileActivity.this, LoginActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(intent);
 
                 // Finish the current activity

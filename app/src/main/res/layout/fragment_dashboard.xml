@@ -15,6 +15,7 @@
         android:layout_marginTop="20dp"
         app:titleCentered="true"
         app:navigationIcon="@drawable/arrow_back"
+        app:liftOnScroll="true"
         app:navigationIconTint="@color/black" >
 
         <TextView

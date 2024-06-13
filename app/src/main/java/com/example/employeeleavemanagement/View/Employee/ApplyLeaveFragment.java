@@ -1,12 +1,18 @@
 package com.example.employeeleavemanagement.View.Employee;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.employeeleavemanagement.R;
+import com.example.employeeleavemanagement.Utils.AndroidUtil;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,7 +33,9 @@ public class ApplyLeaveFragment extends Fragment {
 
     String selectedLeave, selectedDepartment;
 
-    String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
+    String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, UserID;
+
+    MaterialToolbar topAppBar;
 
 
     @Override
@@ -43,9 +53,16 @@ public class ApplyLeaveFragment extends Fragment {
         Email = sharedPreferences.getString("email", "");
         EmployeeID = sharedPreferences.getString("employeeID", "");
         Name = sharedPreferences.getString("name", "");
+        UserID = sharedPreferences.getString("UID", "");
+
+        AndroidUtil.ShowToast(getContext(), UserID);
+
 
         TextInputEditText startDateEditText = view.findViewById(R.id.start_date_edit_text);
         TextInputEditText endDateEditText = view.findViewById(R.id.end_date_edit_text);
+
+        topAppBar = view.findViewById(R.id.topAppBar);
+        setupTopAppBar(topAppBar);
 
         Spinner leaveTypeSpinner = view.findViewById(R.id.leave_type_spinner);
         Spinner departmentSpinner = view.findViewById(R.id.department_spinner);
@@ -102,5 +119,15 @@ public class ApplyLeaveFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setupTopAppBar(MaterialToolbar topAppBar) {
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed(); // or getActivity().onBackPressed(); if you're in a fragment
+            }
+        });
+
     }
 }

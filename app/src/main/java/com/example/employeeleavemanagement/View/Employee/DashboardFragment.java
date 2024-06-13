@@ -4,22 +4,31 @@ import static android.content.ContentValues.TAG;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
+import com.example.employeeleavemanagement.View.Common.ProfileActivity;
+import com.example.employeeleavemanagement.View.HOD.HoDDashBoard;
+import com.example.employeeleavemanagement.View.HR.HRDashboard;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,6 +44,9 @@ public class DashboardFragment extends Fragment {
     String gender, name, phoneNumber, birthday, password, email, employeeID;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
 
+
+    MaterialToolbar topAppBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +59,12 @@ public class DashboardFragment extends Fragment {
 
         String formattedDate = AndroidUtil.getFormattedDate();
         TxtViewDate.setText(formattedDate);
+
+        topAppBar = view.findViewById(R.id.topAppBar);
+        setupTopAppBar(topAppBar);
+
+
+
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
         boolean isEmployeeInfoFetched = sharedPreferences.getBoolean("isEmployeeInfoFetched", false);
@@ -94,6 +112,7 @@ public class DashboardFragment extends Fragment {
                             editor.putString("email", email);
                             editor.putString("employeeID", employeeID);
                             editor.putString("name", name);
+                            editor.putString("UID", uid);
                             editor.putBoolean("isEmployeeInfoFetched", true);
                             editor.apply();
 
@@ -128,5 +147,15 @@ public class DashboardFragment extends Fragment {
         if (textViewEmployeeCheckNo != null) {
             textViewEmployeeCheckNo.setText(EmployeeID);
         }
+    }
+
+    private void setupTopAppBar(MaterialToolbar topAppBar) {
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed(); // or getActivity().onBackPressed(); if you're in a fragment
+            }
+        });
+
     }
 }

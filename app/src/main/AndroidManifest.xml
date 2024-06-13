@@ -15,7 +15,7 @@
         android:theme="@style/Base.Theme.EmployeeLeaveManagement"
         tools:targetApi="31">
         <activity
-            android:name=".View.Common.HoDRProfileActivity"
+            android:name=".View.Common.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".View.HR.HRDashboard"

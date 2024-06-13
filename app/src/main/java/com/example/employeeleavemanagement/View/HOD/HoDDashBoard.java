@@ -2,9 +2,13 @@ package com.example.employeeleavemanagement.View.HOD;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -15,8 +19,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
+import com.example.employeeleavemanagement.View.Common.ProfileActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,10 +33,17 @@ import java.util.Objects;
 
 public class HoDDashBoard extends AppCompatActivity {
 
+
     private MaterialTextView TxtViewDate, TextViewEmployeeName;
 
     String gender, name, phoneNumber, birthday, password, email, employeeID;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
+
+    MaterialCardView CardViewEmployeeInfo;
+    MaterialToolbar topAppBar;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +62,20 @@ public class HoDDashBoard extends AppCompatActivity {
 
         String formattedDate = AndroidUtil.getFormattedDate();
         TxtViewDate.setText(formattedDate);
+
+        topAppBar = findViewById(R.id.topAppBar);
+        setupTopAppBar(topAppBar);
+
+        CardViewEmployeeInfo = findViewById(R.id.CardViewEmployeeInfo);
+
+        CardViewEmployeeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HoDDashBoard.this, ProfileActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
         boolean isEmployeeInfoFetched = sharedPreferences.getBoolean("isEmployeeInfoFetched", false);
@@ -125,5 +153,30 @@ public class HoDDashBoard extends AppCompatActivity {
             textViewEmployeeName.setText(Name);
         }
 
+    }
+
+    private void setupTopAppBar(MaterialToolbar topAppBar) {
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // or getActivity().onBackPressed(); if you're in a fragment
+            }
+        });
+
+        topAppBar.setOnMenuItemClickListener(new MaterialToolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.Notification) {
+                    AndroidUtil.ShowToast(getApplicationContext(), "Notification soon to be added");
+                    return true;
+                } else if (item.getItemId() == R.id.Account) {
+                    Intent intent = new Intent(HoDDashBoard.this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 }
