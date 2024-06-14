@@ -62,6 +62,7 @@
                     android:layout_height="wrap_content"
                     app:hintAnimationEnabled="true"
                     android:layout_marginBottom="10dp"
+                    app:placeholderText="07********"
                     app:hintEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText

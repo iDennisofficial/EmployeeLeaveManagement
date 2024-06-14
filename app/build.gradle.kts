@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.employeeleavemanagement"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -49,20 +48,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation (libs.gridlayout)
-
-
-    //country code picker
+    implementation(libs.gridlayout)
     implementation(libs.ccp)
-
-    //OTP pinview
     implementation(libs.pinview)
-
-
-
-
-
-
-
-
 }
