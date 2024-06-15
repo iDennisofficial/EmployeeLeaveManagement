@@ -3,10 +3,15 @@ package com.example.employeeleavemanagement.View.Employee;
 import static android.content.ContentValues.TAG;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -73,6 +78,8 @@ public class ApplyLeaveFragment extends Fragment {
 
     MaterialButton submitButton;
     long days;
+
+    private boolean isSubmitInProgress = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -309,14 +316,18 @@ public class ApplyLeaveFragment extends Fragment {
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                isSubmitInProgress = true; // Set the flag to true
+                 submitButton.setEnabled(false); // Disable the submit button
                 // Submit the leave application
+
+                //TODO: UNcomment the submit button
                 submitLeaveRequest();
                 Toast.makeText(getContext(), "Leave application submitted successfully", Toast.LENGTH_SHORT).show();
 
                 // Send a notification to the employee's phone
                 sendNotificationToEmployee();
 
-                // You can also add code to navigate to a new fragment or activity here
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -328,34 +339,58 @@ public class ApplyLeaveFragment extends Fragment {
         builder.show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isSubmitInProgress) {
+            submitButton.setEnabled(true); // Re-enable the submit button
+        }
+    }
+
     private void sendNotificationToEmployee() {
-        // Create a notification builder
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(requireContext());
+        String channelID = "CHANNEL_ID_NOTIFICATION";
 
-        // Set the notification title and message
-        notificationBuilder.setSmallIcon(R.drawable.eleavemoculogo);
-        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.eleavemoculogo));
-        notificationBuilder.setContentTitle("Leave Application");
-        notificationBuilder.setContentText("Your leave application has been received successfully.");
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(requireContext(), channelID);
+        builder.setSmallIcon(R.drawable.eleavemoculogo)
+                .setContentTitle("eLeMA")
+                .setContentText("Leave request submitted successful")
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        // Set the notification priority
-        notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        Intent intent = new Intent(requireContext(), EmployeeMainDashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        // Create a notification manager
+        PendingIntent pendingIntent = PendingIntent.getActivity(requireContext(), 0,
+                intent, PendingIntent.FLAG_MUTABLE);
+        builder.setContentIntent(pendingIntent);
+
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
 
-        // Build and show the notification
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                String channelName = "eLeMA";
+                String channelDescription = "Leave request submitted successful";
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel channel = new NotificationChannel(channelID, channelName, importance);
+                channel.setDescription(channelDescription);
+                notificationManager.createNotificationChannel(channel);
+                Log.d(TAG, "Notification channel created successfully");
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)!= PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((Activity) requireContext(), new String[]{Manifest.permission.POST_NOTIFICATIONS}, 123);
+                    Log.w(TAG, "POST_NOTIFICATIONS permission not granted");
+                    return;
+                }
+            }
+
+            notificationManager.notify(0, builder.build());
+            Log.d(TAG, "Notification sent successfully");
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating notification channel", e);
         }
-        notificationManager.notify(12345, notificationBuilder.build());
     }
 
 
