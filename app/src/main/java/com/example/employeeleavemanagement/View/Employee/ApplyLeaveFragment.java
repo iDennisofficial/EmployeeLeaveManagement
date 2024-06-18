@@ -49,6 +49,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -64,22 +65,24 @@ import java.util.Objects;
 
 public class ApplyLeaveFragment extends Fragment {
 
-    String selectedLeave, selectedDepartment, employeePhone, startDate, endDate, reason, currentDateandTime;
+    String selectedLeave, employeePhone, startDate, endDate, reason, currentDateandTime;
 
-    String Gender, Name, PhoneNumber, Birthday, Password, Email, CheckNo, UserID;
+    String Gender, Name, PhoneNumber, Birthday, Password, Email, CheckNo, UserID, SelectedDepartment;
 
     MaterialToolbar topAppBar;
 
     TextInputEditText startDateEditText, endDateEditText, reasonEditText, EmployeePhoneEditText;
 
-    Spinner leaveTypeSpinner, departmentSpinner;
+    Spinner leaveTypeSpinner;
 
-    TextInputLayout departmentLayout, leaveTypeLayout, startDateLayout, endDateLayout, reasonLayout, EmployeePhoneLayout;
+    TextInputLayout number_of_days_layout, leaveTypeLayout, startDateLayout, endDateLayout, reasonLayout, EmployeePhoneLayout;
 
     MaterialButton submitButton;
     long days;
 
     private boolean isSubmitInProgress = false;
+
+    MaterialTextView number_of_days_textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,14 +100,15 @@ public class ApplyLeaveFragment extends Fragment {
         CheckNo = sharedPreferences.getString("employeeID", "");
         Name = sharedPreferences.getString("name", "");
         UserID = sharedPreferences.getString("UID", "");
+        SelectedDepartment = sharedPreferences.getString("department", "");
 
 
         topAppBar = view.findViewById(R.id.topAppBar);
         setupTopAppBar(topAppBar);
 
         leaveTypeSpinner = view.findViewById(R.id.leave_type_spinner);
-        departmentSpinner = view.findViewById(R.id.department_spinner);
-        departmentLayout = view.findViewById(R.id.department_layout);
+        number_of_days_textView = view.findViewById(R.id.number_of_days_textView);
+        number_of_days_layout = view.findViewById(R.id.number_of_days_layout);
         leaveTypeLayout = view.findViewById(R.id.leave_type_layout);
         startDateEditText = view.findViewById(R.id.start_date_edit_text);
         endDateEditText = view.findViewById(R.id.end_date_edit_text);
@@ -121,13 +125,9 @@ public class ApplyLeaveFragment extends Fragment {
         leavetypeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         leaveTypeSpinner.setAdapter(leavetypeadapter);
 
-        ArrayAdapter<CharSequence> departmentadapter = ArrayAdapter.createFromResource(requireActivity(),
-                R.array.fbis_department, android.R.layout.simple_spinner_item);
-        departmentadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        departmentSpinner.setAdapter(departmentadapter);
 
         leaveTypeSpinner.setPrompt("Leave Type");
-        departmentSpinner.setPrompt("Department");
+
 
 
         startDateEditText.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +147,7 @@ public class ApplyLeaveFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                number_of_days_textView.setText(String.valueOf(days));
                 validateAndSubmitLeaveApplication(v);
 
                 currentDateandTime = getCurrentTimeAndDate();
@@ -173,7 +174,7 @@ public class ApplyLeaveFragment extends Fragment {
         endDate = Objects.requireNonNull(endDateEditText.getText()).toString().trim();
         reason = Objects.requireNonNull(reasonEditText.getText()).toString().trim();
         selectedLeave = leaveTypeSpinner.getSelectedItem().toString();
-        selectedDepartment = departmentSpinner.getSelectedItem().toString();
+
 
         boolean isValid = true;
 
@@ -188,12 +189,6 @@ public class ApplyLeaveFragment extends Fragment {
             EmployeePhoneLayout.setError(null);
         }
 
-        if (selectedDepartment.equals("Select Department")) {
-            departmentLayout.setError("Please select a department");
-            isValid = false;
-        } else {
-            departmentLayout.setError(null);
-        }
 
         if (selectedLeave.equals("Select Leave Type")) {
             leaveTypeLayout.setError("Please select a leave type");
@@ -214,6 +209,13 @@ public class ApplyLeaveFragment extends Fragment {
             isValid = false;
         } else {
             endDateLayout.setError(null);
+        }
+
+        if (number_of_days_textView.getText().toString().trim().isEmpty()) {
+            number_of_days_layout.setError("Please enter end date");
+            isValid = false;
+        } else {
+            number_of_days_layout.setError(null);
         }
 
         if (reason.isEmpty()) {
@@ -313,29 +315,21 @@ public class ApplyLeaveFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Are you sure you want to submit your leave application?" +
                 " Check your information before submitting. This action is irreversible.");
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                isSubmitInProgress = true; // Set the flag to true
-                 submitButton.setEnabled(false); // Disable the submit button
-                // Submit the leave application
+        builder.setPositiveButton("Confirm", (dialog, which) -> {
+            isSubmitInProgress = true; // Set the flag to true
+             submitButton.setEnabled(false); // Disable the submit button
+            // Submit the leave application
 
-                //TODO: UNcomment the submit button
-                submitLeaveRequest();
-                Toast.makeText(getContext(), "Leave application submitted successfully", Toast.LENGTH_SHORT).show();
+            //TODO: UNcomment the submit button
+            submitLeaveRequest();
+            Toast.makeText(getContext(), "Leave application submitted successfully", Toast.LENGTH_SHORT).show();
 
-                // Send a notification to the employee's phone
-                sendNotificationToEmployee();
+            // Send a notification to the employee's phone
+            sendNotificationToEmployee();
 
 
-            }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.show();
     }
 
@@ -353,8 +347,8 @@ public class ApplyLeaveFragment extends Fragment {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(requireContext(), channelID);
         builder.setSmallIcon(R.drawable.eleavemoculogo)
-                .setContentTitle("eLeMA")
-                .setContentText("Leave request submitted successful")
+                .setContentTitle("Leave Request Submission")
+                .setContentText("Congratulations Leave request submitted successful")
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
@@ -369,8 +363,8 @@ public class ApplyLeaveFragment extends Fragment {
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                String channelName = "eLeMA";
-                String channelDescription = "Leave request submitted successful";
+                String channelName = "Leave Request Submission";
+                String channelDescription = "Congratulations Leave request submitted successful";
                 int importance = NotificationManager.IMPORTANCE_HIGH;
                 NotificationChannel channel = new NotificationChannel(channelID, channelName, importance);
                 channel.setDescription(channelDescription);
@@ -429,7 +423,7 @@ public class ApplyLeaveFragment extends Fragment {
         leaveRequest.setEmail(Email);
         leaveRequest.setCheckNo(CheckNo);
         leaveRequest.setHomephone(employeePhone);
-        leaveRequest.setDepartment(selectedDepartment);
+        leaveRequest.setDepartment(SelectedDepartment);
         leaveRequest.setLeaveType(selectedLeave);
         leaveRequest.setStartDate(startDate);
         leaveRequest.setEndDate(endDate);

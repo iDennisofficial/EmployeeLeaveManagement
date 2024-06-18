@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -36,10 +35,10 @@ public class HoDDashBoard extends AppCompatActivity {
 
     private MaterialTextView TxtViewDate, TextViewEmployeeName;
 
-    String gender, name, phoneNumber, birthday, password, email, employeeID;
-    String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
+    String gender, name, phoneNumber, birthday, password, email, employeeID, department;
+    String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, Department;
 
-    MaterialCardView CardViewEmployeeInfo;
+    MaterialCardView CardViewEmployeeInfo, CardViewRequests;
     MaterialToolbar topAppBar;
 
 
@@ -66,12 +65,22 @@ public class HoDDashBoard extends AppCompatActivity {
         topAppBar = findViewById(R.id.topAppBar);
         setupTopAppBar(topAppBar);
 
+        CardViewRequests = findViewById(R.id.CardViewRequests);
+
+        CardViewRequests.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), HoDRequestsActivity.class);
+            startActivity(intent);
+        });
+
+
+
         CardViewEmployeeInfo = findViewById(R.id.CardViewEmployeeInfo);
 
         CardViewEmployeeInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HoDDashBoard.this, ProfileActivity.class);
+
                 startActivity(intent);
 
             }
@@ -110,6 +119,7 @@ public class HoDDashBoard extends AppCompatActivity {
                             email = documentSnapshot.getString("email");
                             employeeID = documentSnapshot.getString("employeeID");
                             name = documentSnapshot.getString("name");
+                            department = documentSnapshot.getString("department");
 
                             // Store the employee information in SharedPreferences
                             SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
@@ -121,6 +131,7 @@ public class HoDDashBoard extends AppCompatActivity {
                             editor.putString("email", email);
                             editor.putString("employeeID", employeeID);
                             editor.putString("name", name);
+                            editor.putString("department", department);
                             editor.putBoolean("isEmployeeInfoFetched", true);
                             editor.apply();
 
@@ -148,6 +159,7 @@ public class HoDDashBoard extends AppCompatActivity {
         Email = sharedPreferences.getString("email", "");
         EmployeeID = sharedPreferences.getString("employeeID", "");
         Name = sharedPreferences.getString("name", "");
+        Department = sharedPreferences.getString("department", "");
 
         if (textViewEmployeeName!= null) {
             textViewEmployeeName.setText(Name);
@@ -168,6 +180,7 @@ public class HoDDashBoard extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.Notification) {
                     AndroidUtil.ShowToast(getApplicationContext(), "Notification soon to be added");
+
                     return true;
                 } else if (item.getItemId() == R.id.Account) {
                     Intent intent = new Intent(HoDDashBoard.this, ProfileActivity.class);

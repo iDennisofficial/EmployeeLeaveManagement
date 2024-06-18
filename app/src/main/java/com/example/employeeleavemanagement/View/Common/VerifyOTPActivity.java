@@ -2,6 +2,7 @@ package com.example.employeeleavemanagement.View.Common;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -44,7 +45,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
     PinView PinViewVerifyOTP;
     ProgressBar progressBar;
 
-    String name, email, employeeID, password, gender, completePhoneNumber, completedBirthday, VerificationCode, userId;
+    String name, email, employeeID, password, gender, completePhoneNumber, completedBirthday, VerificationCode, userId, department;
 
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -74,6 +75,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         gender = getIntent().getStringExtra("Gender");
         completePhoneNumber = getIntent().getStringExtra("PhoneNumber");
         completedBirthday = getIntent().getStringExtra("Birthday");
+        department = getIntent().getStringExtra("Department");
 
         BtnVerifyOTP = findViewById(R.id.BtnVerifyOTP);
         TxtViewVerifiedPhoneNo = findViewById(R.id.TxtViewVerifiedPhoneNo);
@@ -126,10 +128,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-
+                                e.printStackTrace();
+                                Log.e("OTP Verification", "OTP verification failed: " + e.getMessage());
                                 AndroidUtil.ShowToast(getApplicationContext(), "OTP verification failed");
                                 setInProgress(false);
-
                             }
 
                             @Override
@@ -215,6 +217,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 employeeData.put("email", email);
                 employeeData.put("employeeID", employeeID);
                 employeeData.put("name", name);
+                employeeData.put("department", department);
+
 
                 return employeeData;
             }

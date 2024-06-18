@@ -67,6 +67,7 @@ public class RegistrationSecondScreenActivity extends AppCompatActivity {
                 String email = getIntent().getStringExtra("Email");
                 String employeeID = getIntent().getStringExtra("EmployeeID");
                 String password = getIntent().getStringExtra("Password");
+                String department = getIntent().getStringExtra("Department");
                 Intent intent = new Intent(getApplicationContext(), VerifyOTPActivity.class);
 
                 if (validateInputs()) {
@@ -74,9 +75,11 @@ public class RegistrationSecondScreenActivity extends AppCompatActivity {
                     intent.putExtra("Email", email);
                     intent.putExtra("EmployeeID", employeeID);
                     intent.putExtra("Password", password);
+                    intent.putExtra("Department", department);
                     intent.putExtra("Gender", gender);
                     intent.putExtra("PhoneNumber", completePhoneNumber);
                     intent.putExtra("Birthday", completedBirthday);
+
 
                     startActivity(intent);
                 }
