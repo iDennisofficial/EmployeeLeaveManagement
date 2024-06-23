@@ -15,6 +15,7 @@ public class HoDLeaveRequestModel {
     private String reason;
     private String createdAt;
     private String status;
+    private String review;
 
 
 
@@ -45,6 +46,26 @@ public class HoDLeaveRequestModel {
         this.reason = reason;
         this.createdAt = createdAt;
         this.status = status;
+    }
+
+    public HoDLeaveRequestModel(String leaveRequestId, String employeeId, String name, String email,
+                                String checkNo, String homephone, String department, String leaveType,
+                                String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status, String review) {
+        this.leaveRequestId = leaveRequestId;
+        this.employeeId = employeeId;
+        this.name = name;
+        this.email = email;
+        this.checkNo = checkNo;
+        this.homephone = homephone;
+        this.department = department;
+        this.leaveType = leaveType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.numberOfDays = numberOfDays;
+        this.reason = reason;
+        this.createdAt = createdAt;
+        this.status = status;
+        this.review = review;
     }
 
     public String getLeaveRequestId() {
@@ -157,5 +178,13 @@ public class HoDLeaveRequestModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 }

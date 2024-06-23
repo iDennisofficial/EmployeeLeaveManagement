@@ -67,7 +67,7 @@ public class ApplyLeaveFragment extends Fragment {
 
     String selectedLeave, employeePhone, startDate, endDate, reason, currentDateandTime;
 
-    String Gender, Name, PhoneNumber, Birthday, Password, Email, CheckNo, UserID, SelectedDepartment;
+    String Gender, Name, PhoneNumber, Birthday, Password, Email, CheckNo, UserID, Department;
 
     MaterialToolbar topAppBar;
 
@@ -100,7 +100,7 @@ public class ApplyLeaveFragment extends Fragment {
         CheckNo = sharedPreferences.getString("employeeID", "");
         Name = sharedPreferences.getString("name", "");
         UserID = sharedPreferences.getString("UID", "");
-        SelectedDepartment = sharedPreferences.getString("department", "");
+        Department = sharedPreferences.getString("department", "");
 
 
         topAppBar = view.findViewById(R.id.topAppBar);
@@ -423,13 +423,14 @@ public class ApplyLeaveFragment extends Fragment {
         leaveRequest.setEmail(Email);
         leaveRequest.setCheckNo(CheckNo);
         leaveRequest.setHomephone(employeePhone);
-        leaveRequest.setDepartment(SelectedDepartment);
+        leaveRequest.setDepartment(Department);
         leaveRequest.setLeaveType(selectedLeave);
         leaveRequest.setStartDate(startDate);
         leaveRequest.setEndDate(endDate);
         leaveRequest.setNumberOfDays(days);
         leaveRequest.setReason(reason);
         leaveRequest.setCreatedAt(currentDateandTime);
+        leaveRequest.setQueryTime(new Date());
         leaveRequest.setStatus("Pending"); // Set the status to "Pending" initially
         return leaveRequest;
     }

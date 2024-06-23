@@ -1,10 +1,6 @@
 package com.example.employeeleavemanagement.View.HOD;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,38 +8,29 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.employeeleavemanagement.Model.Common.LeaveStatus;
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Objects;
-
-public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
+public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
 
     MaterialTextView name_textView, email_textView, phone_textView, checkNo_textView, leaveType_textView,
             startDate_textView, endDate_textView, number_of_days_textView, reason_textView, created_at_textView,
-            status_textView;
+            status_textView, review_textView;
 
-    TextInputEditText review_edit_text;
-    TextInputLayout review_layout;
-    MaterialButton Review_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_hod_leave_request_detail);
+        setContentView(R.layout.activity_hod_reviewed_leave_request_detail);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-
         });
 
         // Retrieve the passed data from the intent extras
@@ -62,6 +49,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         String reason = getIntent().getStringExtra("reason");
         String createdAt = getIntent().getStringExtra("createdAt");
         String status = getIntent().getStringExtra("status");
+        String review = getIntent().getStringExtra("review");
 
         name_textView = findViewById(R.id.name_textView);
         email_textView = findViewById(R.id.email_textView);
@@ -74,11 +62,9 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         reason_textView = findViewById(R.id.reason_textView);
         created_at_textView = findViewById(R.id.created_at_textView);
         status_textView = findViewById(R.id.status_textView);
+        review_textView = findViewById(R.id.review_textView);
 
 
-        review_edit_text = findViewById(R.id.review_edit_text);
-        review_layout = findViewById(R.id.review_layout);
-        Review_button = findViewById(R.id.Review_button);
 
         name_textView.setText(name);
         email_textView.setText(email);
@@ -91,44 +77,8 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         reason_textView.setText(reason);
         created_at_textView.setText(createdAt);
         status_textView.setText(status);
-
-
-        Review_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String review = Objects.requireNonNull(review_edit_text.getText()).toString().trim();
-
-                if (review.isEmpty()) {
-                    review_layout.setError("Please enter a review");
-                    return;
-                }
-
-                // Update the leave request in Firestore
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                assert leaveRequestId != null;
-                db.collection("leaveRequests").document(leaveRequestId)
-                        .update("review", review, "status", "Reviewed")
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Update successful
-                                review_edit_text.setText(""); // Clear the review entered
-
-                                // Update the leave status in the leaveStatus collection
-                                db.collection("leaveStatus").document(leaveRequestId)
-                                        .set(new LeaveStatus(leaveRequestId, true, false, false))
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "Leave status updated successfully");
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> Log.w(TAG, "Error updating leave status", e));
-                            }
-                        })
-                        .addOnFailureListener(e -> AndroidUtil.ShowToast(getApplicationContext(), "Review failed"));
-            }
-        });
+        review_textView.setText(review);
+       // AndroidUtil.ShowToast(getApplicationContext(),"The review is " + review );
 
     }
 }

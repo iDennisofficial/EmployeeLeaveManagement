@@ -91,6 +91,7 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -186,6 +187,7 @@ public class RegistrationActivity extends AppCompatActivity {
             intent.putExtra("Department", Objects.requireNonNull(departmentSpinner.getSelectedItem().toString()));
             AndroidUtil.ShowToast(this, departmentSpinner.getSelectedItem().toString());
             startActivity(intent);
+            finish();
         }
     }
 }

@@ -41,8 +41,8 @@ public class DashboardFragment extends Fragment {
 
     MaterialTextView TxtViewDate, TextViewEmployeeName, TextViewEmployeeCheckNo;
 
-    String gender, name, phoneNumber, birthday, password, email, employeeID;
-    String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
+    String gender, name, phoneNumber, birthday, password, email, employeeID, department;
+    String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, Department;
 
 
     MaterialToolbar topAppBar;
@@ -101,6 +101,7 @@ public class DashboardFragment extends Fragment {
                             email = documentSnapshot.getString("email");
                             employeeID = documentSnapshot.getString("employeeID");
                             name = documentSnapshot.getString("name");
+                            department = documentSnapshot.getString("department");
 
                             // Store the employee information in SharedPreferences
                             SharedPreferences sharedPreferences = requireContext().getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
@@ -112,6 +113,7 @@ public class DashboardFragment extends Fragment {
                             editor.putString("email", email);
                             editor.putString("employeeID", employeeID);
                             editor.putString("name", name);
+                            editor.putString("department", department);
                             editor.putString("UID", uid);
                             editor.putBoolean("isEmployeeInfoFetched", true);
                             editor.apply();
@@ -140,6 +142,7 @@ public class DashboardFragment extends Fragment {
         Email = sharedPreferences.getString("email", "");
         EmployeeID = sharedPreferences.getString("employeeID", "");
         Name = sharedPreferences.getString("name", "");
+        Department = sharedPreferences.getString("department", "");
 
         if (textViewEmployeeName != null) {
             textViewEmployeeName.setText(Name);

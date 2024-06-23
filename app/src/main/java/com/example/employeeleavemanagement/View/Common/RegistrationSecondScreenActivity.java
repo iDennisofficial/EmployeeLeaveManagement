@@ -82,6 +82,7 @@ public class RegistrationSecondScreenActivity extends AppCompatActivity {
 
 
                     startActivity(intent);
+                    finish();
                 }
 
             }

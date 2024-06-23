@@ -1,5 +1,7 @@
 package com.example.employeeleavemanagement.View.HOD;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,19 +30,23 @@ import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Objects;
 
 public class HoDDashBoard extends AppCompatActivity {
 
 
-    private MaterialTextView TxtViewDate, TextViewEmployeeName;
+    private MaterialTextView TextViewEmployeeName;
 
     String gender, name, phoneNumber, birthday, password, email, employeeID, department;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, Department;
 
-    MaterialCardView CardViewEmployeeInfo, CardViewRequests;
+    MaterialCardView CardViewEmployeeInfo, CardViewRequests, CardViewReviewed;
     MaterialToolbar topAppBar;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
@@ -55,20 +62,28 @@ public class HoDDashBoard extends AppCompatActivity {
             return insets;
         });
 
-        TxtViewDate = findViewById(R.id.TxtViewDate);
+        MaterialTextView txtViewDate = findViewById(R.id.TxtViewDate);
         TextViewEmployeeName = findViewById(R.id.TextViewEmployeeName);
 
 
         String formattedDate = AndroidUtil.getFormattedDate();
-        TxtViewDate.setText(formattedDate);
+        txtViewDate.setText(formattedDate);
 
         topAppBar = findViewById(R.id.topAppBar);
         setupTopAppBar(topAppBar);
 
         CardViewRequests = findViewById(R.id.CardViewRequests);
 
+
         CardViewRequests.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), HoDRequestsActivity.class);
+            startActivity(intent);
+        });
+
+        CardViewReviewed = findViewById(R.id.CardViewReviewed);
+
+        CardViewReviewed.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), HoDReviewedRequestsActivity.class);
             startActivity(intent);
         });
 
@@ -86,6 +101,10 @@ public class HoDDashBoard extends AppCompatActivity {
             }
         });
 
+
+
+
+
         SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
         boolean isEmployeeInfoFetched = sharedPreferences.getBoolean("isEmployeeInfoFetched", false);
 
@@ -95,6 +114,42 @@ public class HoDDashBoard extends AppCompatActivity {
             // Load the employee information from SharedPreferences
             loadEmployeeInfoFromSharedPreferences(TextViewEmployeeName);
         }
+
+        // Retrieve the oldest leave request
+        TextView usernameTextView = findViewById(R.id.usernameTextView);
+        TextView dateTextView = findViewById(R.id.dateTextView);
+        TextView typeTextView = findViewById(R.id.typeTextView);
+        TextView statusTextView = findViewById(R.id.statusTextView);
+
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Pending")
+                .whereEqualTo("department", getCurrentHODDepartment())
+                .orderBy("queryTime", Query.Direction.ASCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(taskOldest -> {
+                    if (taskOldest.isSuccessful() && !taskOldest.getResult().isEmpty()) {
+                        QueryDocumentSnapshot oldestDocument = (QueryDocumentSnapshot) taskOldest.getResult().getDocuments().get(0);
+                        String oldestEmployeeName = oldestDocument.getString("name");
+                        String oldestLeaveType = oldestDocument.getString("leaveType");
+                        String oldestStartDate = oldestDocument.getString("startDate");
+                        String oldestStatus = oldestDocument.getString("status");
+
+                        // Set the text of the TextViews
+                        usernameTextView.setText(oldestEmployeeName);
+                        dateTextView.setText(oldestStartDate);
+                        typeTextView.setText(oldestLeaveType);
+                        statusTextView.setText(oldestStatus);
+                    } else {
+                        Log.e(TAG, "Error retrieving oldest leave request", taskOldest.getException());
+                        AndroidUtil.ShowToast(getApplicationContext(), "Not getting the values");
+                    }
+                });
+
+
+
+
+
     }
 
     private void fetchEmployeeInfo() {
@@ -191,5 +246,11 @@ public class HoDDashBoard extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String getCurrentHODDepartment() {
+        // Get the department of the current HOD from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("department", "");
     }
 }

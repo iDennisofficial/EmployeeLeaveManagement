@@ -16,13 +16,14 @@ public class LeaveRequest {
     private String reason;
     private String createdAt;
     private String status;
+    private Date queryTime;
 
     public LeaveRequest() {
     }
 
     public LeaveRequest(String employeeId, String name, String email, String checkNo, String homephone,
                         String department, String leaveType, String startDate, String endDate, long numberOfDays,
-                        String reason, String createdAt, String status) {
+                        String reason, String createdAt, String status, Date queryTime) {
         this.employeeId = employeeId;
         this.name = name;
         this.email = email;
@@ -36,6 +37,7 @@ public class LeaveRequest {
         this.reason = reason;
         this.createdAt = createdAt;
         this.status = status;
+        this.queryTime = queryTime;
     }
 
     public String getEmployeeId() {
@@ -140,5 +142,13 @@ public class LeaveRequest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getQueryTime() {
+        return queryTime;
+    }
+
+    public void setQueryTime(Date queryTime) {
+        this.queryTime = queryTime;
     }
 }
