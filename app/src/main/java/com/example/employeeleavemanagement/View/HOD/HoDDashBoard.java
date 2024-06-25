@@ -124,11 +124,11 @@ public class HoDDashBoard extends AppCompatActivity {
         db.collection("leaveRequests")
                 .whereEqualTo("status", "Pending")
                 .whereEqualTo("department", getCurrentHODDepartment())
-                .orderBy("queryTime", Query.Direction.ASCENDING)
+                .orderBy("queryTime", Query.Direction.DESCENDING)
                 .limit(1)
                 .get()
                 .addOnCompleteListener(taskOldest -> {
-                    if (taskOldest.isSuccessful() && !taskOldest.getResult().isEmpty()) {
+                    if (taskOldest.isSuccessful() &&!taskOldest.getResult().isEmpty()) {
                         QueryDocumentSnapshot oldestDocument = (QueryDocumentSnapshot) taskOldest.getResult().getDocuments().get(0);
                         String oldestEmployeeName = oldestDocument.getString("name");
                         String oldestLeaveType = oldestDocument.getString("leaveType");

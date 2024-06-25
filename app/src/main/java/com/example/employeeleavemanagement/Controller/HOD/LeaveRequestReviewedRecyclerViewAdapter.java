@@ -69,9 +69,8 @@ public class LeaveRequestReviewedRecyclerViewAdapter extends RecyclerView.Adapte
                 intent.putExtra("status", hoDLeaveRequestModel.getStatus());
                 intent.putExtra("review", hoDLeaveRequestModel.getReview());
 
-                //TODO: Make sure that the review is showing appropriately, because it is not showing
 
-                AndroidUtil.ShowToast(context,"The review is " + hoDLeaveRequestModel.getReview());
+
 
                 // Start the Leave Request Detail Activity
                 context.startActivity(intent);

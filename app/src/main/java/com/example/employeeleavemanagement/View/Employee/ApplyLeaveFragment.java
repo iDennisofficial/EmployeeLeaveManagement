@@ -50,8 +50,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
@@ -397,6 +399,9 @@ public class ApplyLeaveFragment extends Fragment {
     public void submitLeaveRequest() {
         LeaveRequest leaveRequest = getLeaveRequest();
 
+        // Set the queryTime field to the current server timestamp
+        leaveRequest.setQueryTime(Timestamp.now());
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("leaveRequests").add(leaveRequest)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -430,7 +435,6 @@ public class ApplyLeaveFragment extends Fragment {
         leaveRequest.setNumberOfDays(days);
         leaveRequest.setReason(reason);
         leaveRequest.setCreatedAt(currentDateandTime);
-        leaveRequest.setQueryTime(new Date());
         leaveRequest.setStatus("Pending"); // Set the status to "Pending" initially
         return leaveRequest;
     }

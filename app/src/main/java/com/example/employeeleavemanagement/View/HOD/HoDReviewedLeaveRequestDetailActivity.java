@@ -1,6 +1,7 @@
 package com.example.employeeleavemanagement.View.HOD;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -19,7 +21,7 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
 
     MaterialTextView name_textView, email_textView, phone_textView, checkNo_textView, leaveType_textView,
             startDate_textView, endDate_textView, number_of_days_textView, reason_textView, created_at_textView,
-            status_textView, review_textView;
+            status_textView, review_textView,department_textView;
 
 
     @Override
@@ -32,6 +34,9 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+        setupTopAppBar(topAppBar);
 
         // Retrieve the passed data from the intent extras
         String leaveRequestId = getIntent().getStringExtra("leaveRequestId");
@@ -63,6 +68,7 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
         created_at_textView = findViewById(R.id.created_at_textView);
         status_textView = findViewById(R.id.status_textView);
         review_textView = findViewById(R.id.review_textView);
+        department_textView = findViewById(R.id.department_textView);
 
 
 
@@ -70,6 +76,7 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
         email_textView.setText(email);
         phone_textView.setText(homephone);
         checkNo_textView.setText(checkNo);
+        department_textView.setText(department);
         leaveType_textView.setText(leaveType);
         startDate_textView.setText(startDate);
         endDate_textView.setText(endDate);
@@ -80,5 +87,14 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
         review_textView.setText(review);
        // AndroidUtil.ShowToast(getApplicationContext(),"The review is " + review );
 
+    }
+
+    private void setupTopAppBar(MaterialToolbar topAppBar) {
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // or getActivity().onBackPressed(); if you're in a fragment
+            }
+        });
     }
 }

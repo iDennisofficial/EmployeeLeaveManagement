@@ -38,7 +38,7 @@ public class HRDashboard extends AppCompatActivity {
     String gender, name, phoneNumber, birthday, password, email, employeeID;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
 
-    MaterialCardView CardViewEmployeeInfo;
+    MaterialCardView CardViewEmployeeInfo, CardViewRequests;
     MaterialToolbar  topAppBar;
 
     @Override
@@ -63,13 +63,16 @@ public class HRDashboard extends AppCompatActivity {
 
         CardViewEmployeeInfo = findViewById(R.id.CardViewEmployeeInfo);
 
-        CardViewEmployeeInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HRDashboard.this, ProfileActivity.class);
-                startActivity(intent);
+        CardViewEmployeeInfo.setOnClickListener(view -> {
+            Intent intent = new Intent(HRDashboard.this, ProfileActivity.class);
+            startActivity(intent);
 
-            }
+        });
+
+        CardViewRequests = findViewById(R.id.CardViewRequests);
+        CardViewRequests.setOnClickListener(view -> {
+            Intent intent = new Intent(HRDashboard.this, HrRequestsActivity.class);
+            startActivity(intent);
         });
 
         SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);

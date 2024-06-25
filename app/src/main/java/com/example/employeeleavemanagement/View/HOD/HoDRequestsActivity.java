@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,7 @@ import com.example.employeeleavemanagement.Model.HOD.HoDLeaveRequestModel;
 import com.example.employeeleavemanagement.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -47,6 +49,9 @@ public class HoDRequestsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+        setupTopAppBar(topAppBar);
 
         // Initialize the RecyclerView
         recyclerViewLeaveRequests = findViewById(R.id.recyclerViewLeaveRequests);
@@ -111,5 +116,14 @@ public class HoDRequestsActivity extends AppCompatActivity {
         // Get the department of the current HOD from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
         return sharedPreferences.getString("department", "");
+    }
+
+    private void setupTopAppBar(MaterialToolbar topAppBar) {
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // or getActivity().onBackPressed(); if you're in a fragment
+            }
+        });
     }
 }

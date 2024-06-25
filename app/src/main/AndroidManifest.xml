@@ -16,6 +16,12 @@
         android:theme="@style/Base.Theme.EmployeeLeaveManagement"
         tools:targetApi="31">
         <activity
+            android:name=".View.HR.HrApproveRejectDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.HR.HrRequestsActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.HOD.HoDReviewedLeaveRequestDetailActivity"
             android:exported="false" />
         <activity

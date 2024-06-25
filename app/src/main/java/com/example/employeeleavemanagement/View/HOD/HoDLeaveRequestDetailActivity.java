@@ -16,6 +16,7 @@ import com.example.employeeleavemanagement.Model.Common.LeaveStatus;
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,11 +29,12 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
 
     MaterialTextView name_textView, email_textView, phone_textView, checkNo_textView, leaveType_textView,
             startDate_textView, endDate_textView, number_of_days_textView, reason_textView, created_at_textView,
-            status_textView;
+            status_textView, department_textView;
 
     TextInputEditText review_edit_text;
     TextInputLayout review_layout;
     MaterialButton Review_button;
+    private boolean isSubmitInProgress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,9 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
             return insets;
 
         });
+
+      MaterialToolbar  topAppBar = findViewById(R.id.topAppBar);
+        setupTopAppBar(topAppBar);
 
         // Retrieve the passed data from the intent extras
         String leaveRequestId = getIntent().getStringExtra("leaveRequestId");
@@ -74,6 +79,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         reason_textView = findViewById(R.id.reason_textView);
         created_at_textView = findViewById(R.id.created_at_textView);
         status_textView = findViewById(R.id.status_textView);
+        department_textView = findViewById(R.id.department_textView);
 
 
         review_edit_text = findViewById(R.id.review_edit_text);
@@ -84,6 +90,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         email_textView.setText(email);
         phone_textView.setText(homephone);
         checkNo_textView.setText(checkNo);
+        department_textView.setText(department);
         leaveType_textView.setText(leaveType);
         startDate_textView.setText(startDate);
         endDate_textView.setText(endDate);
@@ -113,6 +120,10 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
                                 // Update successful
                                 review_edit_text.setText(""); // Clear the review entered
+                                isSubmitInProgress = true; // Set the flag to true
+                                Review_button.setEnabled(false); // Disable the review button
+                                review_edit_text.setVisibility(View.GONE);
+                                review_layout.setVisibility(View.GONE);
 
                                 // Update the leave status in the leaveStatus collection
                                 db.collection("leaveStatus").document(leaveRequestId)
@@ -130,5 +141,21 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setupTopAppBar(MaterialToolbar topAppBar) {
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // or getActivity().onBackPressed(); if you're in a fragment
+            }
+        });
+    }
+
+    public void onResume() {
+        super.onResume();
+        if (!isSubmitInProgress) {
+            Review_button.setEnabled(true); // Re-enable the submit button
+        }
     }
 }

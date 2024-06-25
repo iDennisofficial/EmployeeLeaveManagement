@@ -1,9 +1,9 @@
-package com.example.employeeleavemanagement.Model.Employee;
+package com.example.employeeleavemanagement.Model.HR;
 
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.FieldValue;
+public class HrApproveRejectModel {
 
-public class LeaveRequest {
+
+    private String leaveRequestId;
     private String employeeId;
     private String name;
     private String email;
@@ -17,14 +17,22 @@ public class LeaveRequest {
     private String reason;
     private String createdAt;
     private String status;
-    private Timestamp queryTime;
+    private String review;
 
-    public LeaveRequest() {
+    public HrApproveRejectModel() {
     }
 
-    public LeaveRequest(String employeeId, String name, String email, String checkNo, String homephone,
-                        String department, String leaveType, String startDate, String endDate, long numberOfDays,
-                        String reason, String createdAt, String status, Timestamp queryTime) {
+    public HrApproveRejectModel(String name, String leaveType, String createdAt, String status) {
+        this.name = name;
+        this.leaveType = leaveType;
+        this.createdAt = createdAt;
+        this.status = status;
+    }
+
+    public HrApproveRejectModel(String leaveRequestId, String employeeId, String name, String email,
+                                String checkNo, String homephone, String department, String leaveType,
+                                String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status) {
+        this.leaveRequestId = leaveRequestId;
         this.employeeId = employeeId;
         this.name = name;
         this.email = email;
@@ -38,7 +46,14 @@ public class LeaveRequest {
         this.reason = reason;
         this.createdAt = createdAt;
         this.status = status;
-        this.queryTime = queryTime;
+    }
+
+    public String getLeaveRequestId() {
+        return leaveRequestId;
+    }
+
+    public void setLeaveRequestId(String leaveRequestId) {
+        this.leaveRequestId = leaveRequestId;
     }
 
     public String getEmployeeId() {
@@ -121,20 +136,20 @@ public class LeaveRequest {
         this.numberOfDays = numberOfDays;
     }
 
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public String getStatus() {
@@ -145,11 +160,31 @@ public class LeaveRequest {
         this.status = status;
     }
 
-    public Timestamp getQueryTime() {
-        return queryTime;
+    public String getReview() {
+        return review;
     }
 
-    public void setQueryTime(Timestamp queryTime) {
-        this.queryTime = queryTime;
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public HrApproveRejectModel(String leaveRequestId, String employeeId, String name, String email,
+                                String checkNo, String homephone, String department, String leaveType,
+                                String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status, String review) {
+        this.leaveRequestId = leaveRequestId;
+        this.employeeId = employeeId;
+        this.name = name;
+        this.email = email;
+        this.checkNo = checkNo;
+        this.homephone = homephone;
+        this.department = department;
+        this.leaveType = leaveType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.numberOfDays = numberOfDays;
+        this.reason = reason;
+        this.createdAt = createdAt;
+        this.status = status;
+        this.review = review;
     }
 }
