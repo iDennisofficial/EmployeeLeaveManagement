@@ -92,7 +92,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/CardViewCircularEmployeeImg"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="@string/Employee_name"
+                        android:text="Employee Name"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -331,7 +331,7 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/CardViewCancelled"
+                            android:id="@+id/CardViewRejected"
                             style="?attr/materialCardViewStyle"
                             android:layout_width="0dp"
                             android:layout_height="150dp"
@@ -392,7 +392,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="100dp"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:text="Cancelled"
+                                    android:text="Rejected"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -551,7 +551,7 @@
                             android:id="@+id/usernameTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Demetus Chilumanga"
+                            android:text="Employee Name"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -578,8 +578,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/typeTextView"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_marginTop="4dp"
+                            android:background="@color/chuoyellow"
+                            android:padding="3dp"
                             android:text="Leave Status"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -653,7 +655,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="100"
+                            android:text="0"
                             android:textColor="@color/chuoblue"
                             android:textSize="18sp"
                             app:layout_constraintTop_toTopOf="@id/backgroundView"

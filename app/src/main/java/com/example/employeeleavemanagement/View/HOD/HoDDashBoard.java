@@ -121,18 +121,22 @@ public class HoDDashBoard extends AppCompatActivity {
         TextView typeTextView = findViewById(R.id.typeTextView);
         TextView statusTextView = findViewById(R.id.statusTextView);
 
+        String department = getCurrentHODDepartment();
+        Log.d(TAG, "Current HOD Department: " + department + "is not empty");
+
+
         db.collection("leaveRequests")
                 .whereEqualTo("status", "Pending")
                 .whereEqualTo("department", getCurrentHODDepartment())
-                .orderBy("queryTime", Query.Direction.DESCENDING)
+                .orderBy("queryTime", Query.Direction.ASCENDING)
                 .limit(1)
                 .get()
                 .addOnCompleteListener(taskOldest -> {
-                    if (taskOldest.isSuccessful() &&!taskOldest.getResult().isEmpty()) {
+                    if (taskOldest.isSuccessful() && !taskOldest.getResult().isEmpty()) {
                         QueryDocumentSnapshot oldestDocument = (QueryDocumentSnapshot) taskOldest.getResult().getDocuments().get(0);
                         String oldestEmployeeName = oldestDocument.getString("name");
                         String oldestLeaveType = oldestDocument.getString("leaveType");
-                        String oldestStartDate = oldestDocument.getString("startDate");
+                        String oldestStartDate = oldestDocument.getString("createdAt");
                         String oldestStatus = oldestDocument.getString("status");
 
                         // Set the text of the TextViews
@@ -141,10 +145,16 @@ public class HoDDashBoard extends AppCompatActivity {
                         typeTextView.setText(oldestLeaveType);
                         statusTextView.setText(oldestStatus);
                     } else {
-                        Log.e(TAG, "Error retrieving oldest leave request", taskOldest.getException());
+                        // Enhanced error handling
+                        if (taskOldest.getException() != null) {
+                            Log.e(TAG, "Error retrieving oldest leave request", taskOldest.getException());
+                        } else {
+                            Log.e(TAG, "No matching leave requests found.");
+                        }
                         AndroidUtil.ShowToast(getApplicationContext(), "Not getting the values");
                     }
                 });
+
 
 
 

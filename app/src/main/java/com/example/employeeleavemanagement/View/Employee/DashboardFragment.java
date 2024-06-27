@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
@@ -33,6 +34,8 @@ import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
@@ -44,8 +47,11 @@ public class DashboardFragment extends Fragment {
     String gender, name, phoneNumber, birthday, password, email, employeeID, department;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, Department;
 
-
     MaterialToolbar topAppBar;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +81,44 @@ public class DashboardFragment extends Fragment {
             // Load the employee information from SharedPreferences
             loadEmployeeInfoFromSharedPreferences(TextViewEmployeeName, TextViewEmployeeCheckNo);
         }
+
+
+        // Retrieve the oldest leave request
+        TextView usernameTextView = view.findViewById(R.id.usernameTextView);
+        TextView dateTextView = view.findViewById(R.id.dateTextView);
+        TextView typeTextView = view.findViewById(R.id.typeTextView);
+        TextView statusTextView = view.findViewById(R.id.statusTextView);
+
+
+        db.collection("leaveRequests")
+                .whereEqualTo("employeeId", uid)
+                .orderBy("queryTime", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(taskOldest -> {
+                    if (taskOldest.isSuccessful() && !taskOldest.getResult().isEmpty()) {
+                        QueryDocumentSnapshot oldestDocument = (QueryDocumentSnapshot) taskOldest.getResult().getDocuments().get(0);
+                        String oldestEmployeeName = oldestDocument.getString("name");
+                        String oldestLeaveType = oldestDocument.getString("leaveType");
+                        String oldestStartDate = oldestDocument.getString("createdAt");
+                        String oldestStatus = oldestDocument.getString("status");
+
+                        // Set the text of the TextViews
+                        usernameTextView.setText(oldestEmployeeName);
+                        dateTextView.setText(oldestStartDate);
+                        typeTextView.setText(oldestLeaveType);
+                        statusTextView.setText(oldestStatus);
+                    } else {
+                        // Enhanced error handling
+                        if (taskOldest.getException() != null) {
+                            Log.e(TAG, "Error retrieving oldest leave request", taskOldest.getException());
+                        } else {
+                            Log.e(TAG, "No matching leave requests found.");
+                        }
+                        AndroidUtil.ShowToast(requireContext(), "Not getting the values");
+                    }
+                });
+
 
         return view;
     }

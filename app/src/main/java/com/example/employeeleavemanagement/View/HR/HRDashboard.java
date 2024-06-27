@@ -1,5 +1,7 @@
 package com.example.employeeleavemanagement.View.HR;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -28,6 +31,8 @@ import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Objects;
 
@@ -38,8 +43,10 @@ public class HRDashboard extends AppCompatActivity {
     String gender, name, phoneNumber, birthday, password, email, employeeID;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
 
-    MaterialCardView CardViewEmployeeInfo, CardViewRequests;
+    MaterialCardView CardViewEmployeeInfo, CardViewRequests, CardViewApproved;
     MaterialToolbar  topAppBar;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +77,59 @@ public class HRDashboard extends AppCompatActivity {
         });
 
         CardViewRequests = findViewById(R.id.CardViewRequests);
+
         CardViewRequests.setOnClickListener(view -> {
             Intent intent = new Intent(HRDashboard.this, HrRequestsActivity.class);
             startActivity(intent);
+
         });
+
+        CardViewApproved = findViewById(R.id.CardViewApproved);
+
+        CardViewApproved.setOnClickListener(view -> {
+
+            Intent intent = new Intent(HRDashboard.this, HrApprovedLeaveRequestsActivity.class);
+            startActivity(intent);
+        });
+
+
+
+
+        // Retrieve the oldest leave request
+        TextView usernameTextView = findViewById(R.id.usernameTextView);
+        TextView dateTextView = findViewById(R.id.dateTextView);
+        TextView typeTextView = findViewById(R.id.typeTextView);
+        TextView statusTextView = findViewById(R.id.statusTextView);
+
+
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Reviewed")
+                .orderBy("queryTime", Query.Direction.ASCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(taskOldest -> {
+                    if (taskOldest.isSuccessful() && !taskOldest.getResult().isEmpty()) {
+                        QueryDocumentSnapshot oldestDocument = (QueryDocumentSnapshot) taskOldest.getResult().getDocuments().get(0);
+                        String oldestEmployeeName = oldestDocument.getString("name");
+                        String oldestLeaveType = oldestDocument.getString("leaveType");
+                        String oldestStartDate = oldestDocument.getString("createdAt");
+                        String oldestStatus = oldestDocument.getString("status");
+
+                        // Set the text of the TextViews
+                        usernameTextView.setText(oldestEmployeeName);
+                        dateTextView.setText(oldestStartDate);
+                        typeTextView.setText(oldestLeaveType);
+                        statusTextView.setText(oldestStatus);
+                    } else {
+                        // Enhanced error handling
+                        if (taskOldest.getException() != null) {
+                            Log.e(TAG, "Error retrieving oldest leave request", taskOldest.getException());
+                        } else {
+                            Log.e(TAG, "No matching leave requests found.");
+                        }
+                        AndroidUtil.ShowToast(getApplicationContext(), "Not getting the values");
+                    }
+                });
 
         SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
         boolean isEmployeeInfoFetched = sharedPreferences.getBoolean("isEmployeeInfoFetched", false);
@@ -87,7 +143,7 @@ public class HRDashboard extends AppCompatActivity {
     }
 
     private void fetchEmployeeInfo() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         final ProgressDialog progressDialog = new ProgressDialog(this);

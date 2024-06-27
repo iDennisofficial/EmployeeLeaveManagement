@@ -12,17 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.employeeleavemanagement.Model.HR.HrApproveRejectModel;
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.View.HR.HrApproveRejectDetailsActivity;
+import com.example.employeeleavemanagement.View.HR.HrApprovedLeaveRequestDetailActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
-public class ApproveRejectRecyclerViewAdapter extends RecyclerView.Adapter<ApproveRejectRecyclerViewAdapter.ViewHolder> {
+public class ApprovedRejectedRecyclerViewAdapter extends RecyclerView.Adapter<ApprovedRejectedRecyclerViewAdapter.ViewHolder> {
 
     Context context;
     ArrayList<HrApproveRejectModel> hrApproveRejectModelArrayList;
 
-    public ApproveRejectRecyclerViewAdapter(Context context, ArrayList<HrApproveRejectModel> hrApproveRejectModelArrayList) {
+    public ApprovedRejectedRecyclerViewAdapter(Context context, ArrayList<HrApproveRejectModel> hrApproveRejectModelArrayList) {
         this.context = context;
         this.hrApproveRejectModelArrayList = hrApproveRejectModelArrayList;
     }
@@ -32,7 +33,7 @@ public class ApproveRejectRecyclerViewAdapter extends RecyclerView.Adapter<Appro
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.review_leave_request, parent, false);
-        return new ApproveRejectRecyclerViewAdapter.ViewHolder(view);
+        return new ApprovedRejectedRecyclerViewAdapter.ViewHolder(view);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class ApproveRejectRecyclerViewAdapter extends RecyclerView.Adapter<Appro
             @Override
             public void onClick(View v) {
                 // Create an Intent to start the Leave Request Detail Activity
-                Intent intent = new Intent(context, HrApproveRejectDetailsActivity.class);
+                Intent intent = new Intent(context, HrApprovedLeaveRequestDetailActivity.class);
 
                 // Pass the selected leave request data as extras
                 intent.putExtra("leaveRequestId", hrApproveRejectModel.getLeaveRequestId());

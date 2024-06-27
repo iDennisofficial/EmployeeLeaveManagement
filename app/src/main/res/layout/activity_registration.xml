@@ -11,6 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -224,12 +225,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/BtnContinue"
                     android:layout_marginStart="1dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="220dp"
                     android:layout_toEndOf="@+id/TxtViewHaveAccount"
                     android:padding="2dp"
                     android:text="@string/sign_in"
                     android:textColor="@color/blue"
-                    app:fontFamily="@font/poppins_regular" />
+                    app:fontFamily="@font/poppins_regular"
+                    />
 
 
             </RelativeLayout>

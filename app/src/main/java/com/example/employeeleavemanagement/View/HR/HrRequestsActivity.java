@@ -22,6 +22,7 @@ import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.View.HOD.HoDReviewedRequestsActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class HrRequestsActivity extends AppCompatActivity {
     private void retrieveLeaveRequests() {
         db.collection("leaveRequests")
                 .whereEqualTo("status", "Reviewed")
+                .orderBy("queryTime", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

@@ -53,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical"
+                android:layout_marginBottom="150dp"
                 android:padding="16dp">
 
                 <!-- Employee ID -->
