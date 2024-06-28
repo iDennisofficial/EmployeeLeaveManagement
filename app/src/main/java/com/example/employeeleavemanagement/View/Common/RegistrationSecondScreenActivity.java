@@ -105,8 +105,6 @@ public class RegistrationSecondScreenActivity extends AppCompatActivity {
                 gender = "Male";
             } else if (selectedId == R.id.radioButtonFemale) {
                 gender = "Female";
-            } else if (selectedId == R.id.radioButtonOther) {
-                gender = "Other";
             }
 
             // Reset the error message for the first radio button in the group

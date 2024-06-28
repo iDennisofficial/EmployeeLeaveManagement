@@ -17,19 +17,19 @@ import com.chaos.view.PinView;
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +51,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Long timeoutSeconds = 60L;
     PhoneAuthProvider.ForceResendingToken ResendingToken;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
@@ -110,50 +112,111 @@ public class VerifyOTPActivity extends AppCompatActivity {
     }
 
     void sendOTP(String phoneNumber, boolean isResend) {
-        startResendTimer();
-        setInProgress(true);
-        PhoneAuthOptions.Builder builder =
-                PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(completePhoneNumber)
-                        .setTimeout(timeoutSeconds, TimeUnit.SECONDS)
-                        .setActivity(this)
-                        .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                            @Override
-                            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+        // Check if phone number and email have already been used
+        checkIfPhoneNumberAndEmailAlreadyUsed(phoneNumber, email, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    // Phone number and email are not already used, send OTP
+                    startResendTimer();
+                    setInProgress(true);
+                    PhoneAuthOptions.Builder builder =
+                            PhoneAuthOptions.newBuilder(mAuth)
+                                    .setPhoneNumber(completePhoneNumber)
+                                    .setTimeout(timeoutSeconds, TimeUnit.SECONDS)
+                                    .setActivity(VerifyOTPActivity.this)
+                                    .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                                        @Override
+                                        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                                            // This method is called when the verification is completed
+                                            signIn(phoneAuthCredential);
+                                            setInProgress(false);
+                                        }
 
-                                signIn(phoneAuthCredential);
-                                setInProgress(false);
+                                        @Override
+                                        public void onVerificationFailed(@NonNull FirebaseException e) {
+                                            e.printStackTrace();
+                                            Log.e("OTP Verification", "OTP verification failed: " + e.getMessage());
+                                            AndroidUtil.ShowToast(getApplicationContext(), "OTP verification failed");
+                                            setInProgress(false);
+                                        }
 
-                            }
+                                        @Override
+                                        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                                            super.onCodeSent(s, forceResendingToken);
+                                            VerificationCode = s;
+                                            setInProgress(false);
+                                            ResendingToken = forceResendingToken;
 
-                            @Override
-                            public void onVerificationFailed(@NonNull FirebaseException e) {
-                                e.printStackTrace();
-                                Log.e("OTP Verification", "OTP verification failed: " + e.getMessage());
-                                AndroidUtil.ShowToast(getApplicationContext(), "OTP verification failed");
-                                setInProgress(false);
-                            }
+                                            AndroidUtil.ShowToast(getApplicationContext(), "OTP sent successfully");
+                                        }
+                                    });
 
-                            @Override
-                            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                super.onCodeSent(s, forceResendingToken);
-                                VerificationCode = s;
-                                setInProgress(false);
-                                ResendingToken = forceResendingToken;
-
-                                AndroidUtil.ShowToast(getApplicationContext(), "OTP sent successfully");
-
-                            }
-                        });
-
-        if (isResend) {
-            PhoneAuthProvider.verifyPhoneNumber(builder.setForceResendingToken(ResendingToken).build());
-        } else {
-            PhoneAuthProvider.verifyPhoneNumber(builder.build());
-        }
-
+                    if (isResend) {
+                        PhoneAuthProvider.verifyPhoneNumber(builder.setForceResendingToken(ResendingToken).build());
+                    } else {
+                        PhoneAuthProvider.verifyPhoneNumber(builder.build());
+                    }
+                } else {
+                    // Phone number and email are already used, show error message
+                    AndroidUtil.ShowToast(getApplicationContext(), "Phone number or email are already in use");
+                }
+            }
+        });
     }
 
+    void checkIfPhoneNumberAndEmailAlreadyUsed(String phoneNumber, String email, OnCompleteListener<Void> onCompleteListener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference employeeCollection = db.collection("employee");
+
+        setInProgress(true); // Set in progress to true before starting the operation
+
+        employeeCollection.whereEqualTo("phoneNumber", phoneNumber)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot!= null &&!querySnapshot.isEmpty()) {
+                                // Phone number is already used
+                                setInProgress(false); // Set in progress to false
+                                onCompleteListener.onComplete(Tasks.forException(new Exception("Phone number is already used")));
+                                return;
+                            }
+
+                            // Check if email is already used
+                            employeeCollection.whereEqualTo("email", email)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            setInProgress(false); // Set in progress to false
+
+                                            if (task.isSuccessful()) {
+                                                QuerySnapshot querySnapshot = task.getResult();
+                                                if (querySnapshot!= null &&!querySnapshot.isEmpty()) {
+                                                    // Email is already used
+                                                    onCompleteListener.onComplete(Tasks.forException(new Exception("Email is already used")));
+                                                    return;
+                                                }
+
+                                                // Phone number and email are not already used
+                                                onCompleteListener.onComplete(Tasks.forResult(null));
+                                            } else {
+                                                // Error occurred
+                                                onCompleteListener.onComplete(Tasks.forException(task.getException()));
+                                            }
+                                        }
+                                    });
+                        } else {
+                            // Error occurred
+                            setInProgress(false); // Set in progress to false
+                            onCompleteListener.onComplete(Tasks.forException(task.getException()));
+                        }
+                    }
+                });
+    }
 
     void setInProgress(boolean inProgress) {
         if (inProgress) {
