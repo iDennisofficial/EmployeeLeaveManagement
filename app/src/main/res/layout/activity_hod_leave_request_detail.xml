@@ -422,7 +422,6 @@
                     android:inputType="textMultiLine"
                     android:gravity="top"
                     android:scrollbars="vertical"
-
                     />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,5 +1,7 @@
 package com.example.employeeleavemanagement.View.Common;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.gms.tasks.Task;
@@ -239,11 +242,14 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task11 -> {
                     if (task11.isSuccessful()) {
                         userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+                        createLeaveBalanceDocument(userId);
                         // The user account has been successfully created
                         Map<String, Object> employeeData = getEmployeeData();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("employee").document(userId).set(employeeData).addOnSuccessListener(aVoid -> {
                             Intent intent = new Intent(VerifyOTPActivity.this, LoginActivity.class);
+
                             intent.putExtra("UserID", userId);
                             startActivity(intent);
                             finish();
@@ -259,32 +265,51 @@ public class VerifyOTPActivity extends AppCompatActivity {
         });
     }
 
-            @NonNull
-            private Map<String, Object> getEmployeeData() {
-                Map<String, Object> employeeData = new HashMap<>();
+    @NonNull
+    private Map<String, Object> getEmployeeData() {
+        Map<String, Object> employeeData = new HashMap<>();
 
-                // Roles and permissions
-                employeeData.put("Employee", true);
-                employeeData.put("HR", false);
-                employeeData.put("HOD", false);
+        // Roles and permissions
+        employeeData.put("Employee", true);
+        employeeData.put("HR", false);
+        employeeData.put("HOD", false);
 
-                // Personal information
-                employeeData.put("gender", gender);
-                employeeData.put("phoneNumber", completePhoneNumber);
-                employeeData.put("birthday", completedBirthday);
+        // Personal information
+        employeeData.put("gender", gender);
+        employeeData.put("phoneNumber", completePhoneNumber);
+        employeeData.put("birthday", completedBirthday);
 
-                // Sensitive information should be handled carefully
-                employeeData.put("password", password);
+        // Sensitive information should be handled carefully
+        employeeData.put("password", password);
 
-                // Group related fields together for better readability
-                employeeData.put("email", email);
-                employeeData.put("employeeID", employeeID);
-                employeeData.put("name", name);
-                employeeData.put("department", department);
+        // Group related fields together for better readability
+        employeeData.put("email", email);
+        employeeData.put("employeeID", employeeID);
+        employeeData.put("name", name);
+        employeeData.put("department", department);
 
 
-                return employeeData;
-            }
+        return employeeData;
+    }
+
+    public void createLeaveBalanceDocument(String userId) {
+        // Data to initialize the leave balance
+        Map<String, Object> leaveBalanceData = new HashMap<>();
+        leaveBalanceData.put("annualLeave", 28); // Example initial balance
+        leaveBalanceData.put("sickLeave", 180);
+        leaveBalanceData.put("sabbaticalLeave", 365);
+        leaveBalanceData.put("maternityLeave", 84);
+        leaveBalanceData.put("paternityLeave", 7);
+        leaveBalanceData.put("noPayLeave", 365);
+
+        // Reference to the document in the leaveBalance collection
+        DocumentReference leaveBalanceRef = db.collection("leaveBalance").document(userId);
+
+        // Set the document with initial leave balance data
+        leaveBalanceRef.set(leaveBalanceData)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "Leave balance document created successfully."))
+                .addOnFailureListener(e -> Log.e(TAG, "Error creating leave balance document", e));
+    }
 
 
 

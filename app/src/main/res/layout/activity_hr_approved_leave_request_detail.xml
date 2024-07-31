@@ -411,7 +411,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Review:"
+                        android:text="HR-Review:"
                         android:textColor="@color/chuoblue"
                         android:textSize="18sp" />
 

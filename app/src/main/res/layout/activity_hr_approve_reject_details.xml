@@ -376,6 +376,7 @@ android:layout_height="match_parent"
             </LinearLayout>
 
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -393,9 +394,9 @@ android:layout_height="match_parent"
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/status_textView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:fontFamily="@font/poppins_regular"
                     android:text="status"
                     android:textAlignment="viewEnd"
@@ -403,6 +404,7 @@ android:layout_height="match_parent"
                     android:textSize="16sp" />
 
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -415,22 +417,42 @@ android:layout_height="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Review:"
+                    android:text="Leave Balance:"
                     android:textColor="@color/chuoblue"
                     android:textSize="18sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/review_textView"
+                    android:id="@+id/leavebalance_textView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="status"
+                    android:text="0"
                     android:textAlignment="viewEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </LinearLayout>
+
+            <!-- Review -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/review_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/review_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:hint="Write a review"
+                    android:inputType="textMultiLine"
+                    android:gravity="top"
+                    android:scrollbars="vertical"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -450,7 +472,7 @@ android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:backgroundTint="@color/green"
                     android:layout_marginBottom="20dp"
-                    android:text="Approve" />
+                    android:text="Verify" />
 
                 <!-- Reject Button -->
                 <com.google.android.material.button.MaterialButton

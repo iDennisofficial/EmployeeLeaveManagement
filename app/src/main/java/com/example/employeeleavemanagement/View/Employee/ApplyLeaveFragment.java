@@ -233,16 +233,19 @@ public class ApplyLeaveFragment extends Fragment {
             if (selectedLeave.equals("Annual Leave") && days > 28) {
                 Toast.makeText(getContext(), "Annual leave cannot exceed 28 days", Toast.LENGTH_SHORT).show();
                 isValidLeave = false;
-            } else if (selectedLeave.equals("Sick Leave") && days > 60) {
+            } else if (selectedLeave.equals("Sick Leave") && days > 180) {
                 Toast.makeText(getContext(), "Sick leave cannot exceed 60 days", Toast.LENGTH_SHORT).show();
                 isValidLeave = false;
             } else if (selectedLeave.equals("Sabbatical Leave") && days > 365) {
                 Toast.makeText(getContext(), "Sabbatical leave cannot exceed 365 days", Toast.LENGTH_SHORT).show();
                 isValidLeave = false;
-            } else if (selectedLeave.equals("Maternity Leave") && days > 80) {
+            } else if (selectedLeave.equals("Maternity Leave") && days > 84) {
                 Toast.makeText(getContext(), "Maternity leave cannot exceed 80 days", Toast.LENGTH_SHORT).show();
                 isValidLeave = false;
-            } else if (selectedLeave.equals("Paternity Leave") && days > 3) {
+            } else if (selectedLeave.equals("Paternity Leave") && days > 7) {
+                Toast.makeText(getContext(), "Paternity leave cannot exceed 3 days", Toast.LENGTH_SHORT).show();
+                isValidLeave = false;
+            } else if (selectedLeave.equals("No Pay Leave") && days > 365) {
                 Toast.makeText(getContext(), "Paternity leave cannot exceed 3 days", Toast.LENGTH_SHORT).show();
                 isValidLeave = false;
             }

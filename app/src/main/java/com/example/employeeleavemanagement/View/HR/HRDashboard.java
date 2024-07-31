@@ -22,17 +22,20 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.employeeleavemanagement.R;
 import com.example.employeeleavemanagement.Utils.AndroidUtil;
 import com.example.employeeleavemanagement.View.Common.ProfileActivity;
-import com.example.employeeleavemanagement.View.HOD.HoDDashBoard;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
@@ -43,8 +46,11 @@ public class HRDashboard extends AppCompatActivity {
     String gender, name, phoneNumber, birthday, password, email, employeeID;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID;
 
-    MaterialCardView CardViewEmployeeInfo, CardViewRequests, CardViewApproved;
+    MaterialCardView CardViewEmployeeInfo, CardViewRequests, CardViewApproved, CardViewRejected,cardViewOldLeaveRequests;
     MaterialToolbar  topAppBar;
+    int PendingCount, VerifiedCount,RejectedCount;
+    TextView TextViewPendingLeaveRequests, TextViewRejectedLeaveRequest, TextViewVerifiedLeaveRequests, TextViewOnLeaveRequests,
+            TextViewPresentEmployees;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -59,6 +65,12 @@ public class HRDashboard extends AppCompatActivity {
             return insets;
         });
 
+        TextViewPendingLeaveRequests = findViewById(R.id.TextViewPendingLeaveRequests);
+        TextViewRejectedLeaveRequest = findViewById(R.id.TextViewRejectedLeaveRequest);
+        TextViewVerifiedLeaveRequests = findViewById(R.id.TextViewVerifiedLeaveRequests);
+        TextViewOnLeaveRequests = findViewById(R.id.TextViewOnLeaveRequests);
+        TextViewPresentEmployees = findViewById(R.id.TextViewPresentEmployees);
+
         MaterialTextView txtViewDate = findViewById(R.id.TxtViewDate);
         TextViewEmployeeName = findViewById(R.id.TextViewEmployeeName);
 
@@ -68,6 +80,15 @@ public class HRDashboard extends AppCompatActivity {
         topAppBar = findViewById(R.id.topAppBar);
         setupTopAppBar(topAppBar);
 
+        cardViewOldLeaveRequests = findViewById(R.id.cardViewOldLeaveRequests);
+
+        cardViewOldLeaveRequests.setOnClickListener(view -> {
+
+            Intent intent = new Intent(HRDashboard.this, HrRequestsActivity.class);
+            startActivity(intent);
+
+        });
+
         CardViewEmployeeInfo = findViewById(R.id.CardViewEmployeeInfo);
 
         CardViewEmployeeInfo.setOnClickListener(view -> {
@@ -75,6 +96,7 @@ public class HRDashboard extends AppCompatActivity {
             startActivity(intent);
 
         });
+
 
         CardViewRequests = findViewById(R.id.CardViewRequests);
 
@@ -93,6 +115,15 @@ public class HRDashboard extends AppCompatActivity {
         });
 
 
+        CardViewRejected = findViewById(R.id.CardViewRejected);
+        CardViewRejected.setOnClickListener(view -> {
+
+            Intent intent = new Intent(HRDashboard.this, HrRejectedLeaveRequestsActivity.class);
+            startActivity(intent);
+
+        });
+
+
 
 
         // Retrieve the oldest leave request
@@ -103,7 +134,7 @@ public class HRDashboard extends AppCompatActivity {
 
 
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Reviewed")
+                .whereEqualTo("status", "Pending")
                 .orderBy("queryTime", Query.Direction.ASCENDING)
                 .limit(1)
                 .get()
@@ -143,6 +174,8 @@ public class HRDashboard extends AppCompatActivity {
     }
 
     private void fetchEmployeeInfo() {
+
+        countLeaveRequests();
 
         String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
@@ -228,6 +261,121 @@ public class HRDashboard extends AppCompatActivity {
                     return true;
                 } else {
                     return false;
+                }
+            }
+        });
+    }
+
+
+
+    public void countLeaveRequests() {
+        //Pending Leaves
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Pending")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot != null) {
+                                PendingCount = querySnapshot.size();
+                                TextViewPendingLeaveRequests.setText(String.valueOf(PendingCount));
+                                // Use the count as needed
+                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
+                            } else {
+                                Log.d("Count", "No documents found");
+                            }
+                        } else {
+                            Log.e("Count", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        //Verified Leaves
+
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Verified")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot != null) {
+                                VerifiedCount = querySnapshot.size();
+                                TextViewVerifiedLeaveRequests.setText(String.valueOf(VerifiedCount));
+                                // Use the count as needed
+                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
+                            } else {
+                                Log.d("Count", "No documents found");
+                            }
+                        } else {
+                            Log.e("Count", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        //Rejected Requests
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Rejected")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot != null) {
+                                RejectedCount = querySnapshot.size();
+                                TextViewRejectedLeaveRequest.setText(String.valueOf(RejectedCount));
+                                // Use the count as needed
+                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
+                            } else {
+                                Log.d("Count", "No documents found");
+                            }
+                        } else {
+                            Log.e("Count", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        //Onleave Requests
+
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Pending")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot != null) {
+                                PendingCount = querySnapshot.size();
+                                TextViewOnLeaveRequests.setText(String.valueOf(PendingCount));
+                                // Use the count as needed
+                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
+                            } else {
+                                Log.d("Count", "No documents found");
+                            }
+                        } else {
+                            Log.e("Count", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        //Total number of employees
+        CollectionReference collectionRef = db.collection("employee");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    int totalEmployees = querySnapshot.size();
+                    TextViewPresentEmployees.setText(String.valueOf(totalEmployees));
+                    Log.d("Firestore", "Total documents: " + totalEmployees);
+                } else {
+                    Log.d("Firestore", "Error getting documents: " + task.getException());
                 }
             }
         });

@@ -150,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                 // Use the user ID to retrieve user data from Firestore
 
-                                AndroidUtil.ShowToast(LoginActivity.this, "Welcome back!");
 
 
                                 db.collection("employee").document(userId).get()
@@ -169,6 +168,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         if (selectedRole.getId() == R.id.roleEmployee) {
                                                             if (isEmployee) {
                                                                 Intent intent = new Intent(LoginActivity.this, EmployeeMainDashboardActivity.class);
+                                                                AndroidUtil.ShowToast(LoginActivity.this, "Welcome back!");
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {
@@ -178,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         } else if (selectedRole.getId() == R.id.roleHr) {
                                                             if (isHR) {
                                                                 Intent intent = new Intent(LoginActivity.this, HRDashboard.class);
+                                                                AndroidUtil.ShowToast(LoginActivity.this, "Welcome back!");
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {
@@ -187,6 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         } else if (selectedRole.getId() == R.id.roleHod) {
                                                             if (isHOD) {
                                                                 Intent intent = new Intent(LoginActivity.this, HoDDashBoard.class);
+                                                                AndroidUtil.ShowToast(LoginActivity.this, "Welcome back!");
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {

@@ -13,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.employeeleavemanagement.Controller.HR.ApproveRejectRecyclerViewAdapter;
 import com.example.employeeleavemanagement.Controller.HR.ApprovedRejectedRecyclerViewAdapter;
 import com.example.employeeleavemanagement.Model.HR.HrApproveRejectModel;
 import com.example.employeeleavemanagement.R;
@@ -24,7 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class HrApprovedLeaveRequestsActivity extends AppCompatActivity {
+public class HrRejectedLeaveRequestsActivity extends AppCompatActivity {
 
     RecyclerView recyclerApprovedLeaveRequests;
     ApprovedRejectedRecyclerViewAdapter approvedRejectedRecyclerViewAdapter;
@@ -50,7 +49,7 @@ public class HrApprovedLeaveRequestsActivity extends AppCompatActivity {
         recyclerApprovedLeaveRequests.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize the adapter
-        approvedRejectedRecyclerViewAdapter = new ApprovedRejectedRecyclerViewAdapter(HrApprovedLeaveRequestsActivity.this, new ArrayList<>());
+        approvedRejectedRecyclerViewAdapter = new ApprovedRejectedRecyclerViewAdapter(HrRejectedLeaveRequestsActivity.this, new ArrayList<>());
         recyclerApprovedLeaveRequests.setAdapter(approvedRejectedRecyclerViewAdapter);
 
         // Initialize Firestore
@@ -63,7 +62,7 @@ public class HrApprovedLeaveRequestsActivity extends AppCompatActivity {
 
     private void retrieveLeaveRequests() {
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Verified")
+                .whereEqualTo("status", "Rejected")
                 .orderBy("queryTime", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
