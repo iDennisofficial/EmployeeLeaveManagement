@@ -502,7 +502,7 @@
                 android:id="@+id/TxtViewRecent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recent Leave"
+                android:text="Oldest Leave Request"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -514,7 +514,7 @@
                 app:layout_constraintTop_toBottomOf="@id/CardviewLeaveTypes" />
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardViewRecent"
+                android:id="@+id/cardViewOlderLeaveRequests"
                 style="?attr/materialCardViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -618,7 +618,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.067"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardViewRecent" />
+                app:layout_constraintTop_toBottomOf="@id/cardViewOlderLeaveRequests" />
 
             <LinearLayout
                 android:id="@+id/LayoutTodayAttendance"
@@ -663,7 +663,7 @@
                             app:layout_constraintBottom_toBottomOf="parent" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/TextViewPresent"
+                            android:id="@+id/TextViewPresentEmployees"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"

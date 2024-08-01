@@ -21,7 +21,7 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
 
     MaterialTextView name_textView, email_textView, phone_textView, checkNo_textView, leaveType_textView,
             startDate_textView, endDate_textView, number_of_days_textView, reason_textView, created_at_textView,
-            status_textView, review_textView,department_textView;
+            status_textView,department_textView, HR_review_textView, HOD_review_textView;
 
 
     @Override
@@ -54,7 +54,9 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
         String reason = getIntent().getStringExtra("reason");
         String createdAt = getIntent().getStringExtra("createdAt");
         String status = getIntent().getStringExtra("status");
-        String review = getIntent().getStringExtra("review");
+        String HR_review = getIntent().getStringExtra("hrReview");
+        String HOD_review = getIntent().getStringExtra("hodReview");
+
 
         name_textView = findViewById(R.id.name_textView);
         email_textView = findViewById(R.id.email_textView);
@@ -67,8 +69,10 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
         reason_textView = findViewById(R.id.reason_textView);
         created_at_textView = findViewById(R.id.created_at_textView);
         status_textView = findViewById(R.id.status_textView);
-        review_textView = findViewById(R.id.review_textView);
         department_textView = findViewById(R.id.department_textView);
+        HR_review_textView = findViewById(R.id.HR_review_textView);
+        HOD_review_textView = findViewById(R.id.HOD_review_textView);
+
 
 
 
@@ -84,8 +88,10 @@ public class HoDReviewedLeaveRequestDetailActivity extends AppCompatActivity {
         reason_textView.setText(reason);
         created_at_textView.setText(createdAt);
         status_textView.setText(status);
-        review_textView.setText(review);
-       // AndroidUtil.ShowToast(getApplicationContext(),"The review is " + review );
+        HOD_review_textView.setText(HOD_review);
+        HR_review_textView.setText(HR_review);
+
+        //AndroidUtil.ShowToast(getApplicationContext(),"The review is " + HOD_review + HR_review);
 
     }
 

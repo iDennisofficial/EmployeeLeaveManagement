@@ -30,6 +30,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HoDRequestsActivity extends AppCompatActivity {
 
@@ -70,8 +72,11 @@ public class HoDRequestsActivity extends AppCompatActivity {
     }
 
     private void retrieveLeaveRequests() {
+        // Define the statuses you want to check
+        List<String> statuses = Arrays.asList("Verified", "Rejected");
+
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Pending")
+                .whereIn("status", statuses)
                 .whereEqualTo("department", getCurrentHODDepartment())
                 .orderBy("queryTime", Query.Direction.ASCENDING)
                 .get()
@@ -95,9 +100,10 @@ public class HoDRequestsActivity extends AppCompatActivity {
                             String reason = document.getString("reason");
                             String createdAt = document.getString("createdAt");
                             String status = document.getString("status");
+                            String HRreview = document.getString("hrreview");
 
                             // Create a HoDLeaveRequestModel object with the extracted data
-                            HoDLeaveRequestModel hoDLeaveRequestModel = new HoDLeaveRequestModel(leaveRequestId, employeeId, name, email, checkNo, homephone, department, leaveType, startDate, endDate, numberOfDays, reason, createdAt, status);
+                            HoDLeaveRequestModel hoDLeaveRequestModel = new HoDLeaveRequestModel(leaveRequestId, employeeId, name, email, checkNo, homephone, department, leaveType, startDate, endDate, numberOfDays, reason, createdAt, status, HRreview);
 
                             // Add the HoDLeaveRequestModel object to the ArrayList
                             leaveRequests.add(hoDLeaveRequestModel);
@@ -112,6 +118,7 @@ public class HoDRequestsActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private String getCurrentHODDepartment() {
         // Get the department of the current HOD from SharedPreferences

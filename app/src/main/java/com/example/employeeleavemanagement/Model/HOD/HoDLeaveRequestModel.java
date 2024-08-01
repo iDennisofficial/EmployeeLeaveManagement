@@ -9,64 +9,6 @@ public class HoDLeaveRequestModel {
     private String homephone;
     private String department;
     private String leaveType;
-    private String startDate;
-    private String endDate;
-    private long numberOfDays;
-    private String reason;
-    private String createdAt;
-    private String status;
-    private String review;
-
-
-
-    public HoDLeaveRequestModel() {
-    }
-
-    public HoDLeaveRequestModel( String name, String leaveType, String createdAt, String status) {
-        this.name = name;
-        this.leaveType = leaveType;
-        this.createdAt = createdAt;
-        this.status = status;
-    }
-
-    public HoDLeaveRequestModel(String leaveRequestId, String employeeId, String name, String email,
-                                String checkNo, String homephone, String department, String leaveType,
-                                String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status) {
-        this.leaveRequestId = leaveRequestId;
-        this.employeeId = employeeId;
-        this.name = name;
-        this.email = email;
-        this.checkNo = checkNo;
-        this.homephone = homephone;
-        this.department = department;
-        this.leaveType = leaveType;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.numberOfDays = numberOfDays;
-        this.reason = reason;
-        this.createdAt = createdAt;
-        this.status = status;
-    }
-
-    public HoDLeaveRequestModel(String leaveRequestId, String employeeId, String name, String email,
-                                String checkNo, String homephone, String department, String leaveType,
-                                String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status, String review) {
-        this.leaveRequestId = leaveRequestId;
-        this.employeeId = employeeId;
-        this.name = name;
-        this.email = email;
-        this.checkNo = checkNo;
-        this.homephone = homephone;
-        this.department = department;
-        this.leaveType = leaveType;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.numberOfDays = numberOfDays;
-        this.reason = reason;
-        this.createdAt = createdAt;
-        this.status = status;
-        this.review = review;
-    }
 
     public String getLeaveRequestId() {
         return leaveRequestId;
@@ -180,11 +122,77 @@ public class HoDLeaveRequestModel {
         this.status = status;
     }
 
-    public String getReview() {
-        return review;
+    public String getHodreview() {
+        return hodreview;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setHodreview(String hodreview) {
+        this.hodreview = hodreview;
+    }
+
+    public String getHrreview() {
+        return hrreview;
+    }
+
+    public void setHrreview(String hrreview) {
+        this.hrreview = hrreview;
+    }
+
+    private String startDate;
+    private String endDate;
+    private long numberOfDays;
+    private String reason;
+    private String createdAt;
+    private String status;
+    private String hodreview;
+    private String hrreview;
+
+
+
+    public HoDLeaveRequestModel() {
+    }
+
+    public HoDLeaveRequestModel( String name, String leaveType, String createdAt, String status) {
+        this.name = name;
+        this.leaveType = leaveType;
+        this.createdAt = createdAt;
+        this.status = status;
+    }
+
+    public HoDLeaveRequestModel(String leaveRequestId, String employeeId, String name, String email, String checkNo, String homephone, String department, String leaveType, String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status, String hrreview) {
+        this.leaveRequestId = leaveRequestId;
+        this.employeeId = employeeId;
+        this.name = name;
+        this.email = email;
+        this.checkNo = checkNo;
+        this.homephone = homephone;
+        this.department = department;
+        this.leaveType = leaveType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.numberOfDays = numberOfDays;
+        this.reason = reason;
+        this.createdAt = createdAt;
+        this.status = status;
+        this.hrreview = hrreview;
+    }
+
+    public HoDLeaveRequestModel(String leaveRequestId, String employeeId, String email, String name, String checkNo, String homephone, String department, String leaveType, String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status, String hrreview, String hodreview) {
+        this.leaveRequestId = leaveRequestId;
+        this.employeeId = employeeId;
+        this.email = email;
+        this.name = name;
+        this.checkNo = checkNo;
+        this.homephone = homephone;
+        this.department = department;
+        this.leaveType = leaveType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.numberOfDays = numberOfDays;
+        this.reason = reason;
+        this.createdAt = createdAt;
+        this.status = status;
+        this.hodreview = hodreview;
+        this.hrreview = hrreview;
     }
 }

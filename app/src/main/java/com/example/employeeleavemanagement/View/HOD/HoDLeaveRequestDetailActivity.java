@@ -29,7 +29,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
 
     MaterialTextView name_textView, email_textView, phone_textView, checkNo_textView, leaveType_textView,
             startDate_textView, endDate_textView, number_of_days_textView, reason_textView, created_at_textView,
-            status_textView, department_textView;
+            status_textView, department_textView, Hr_review_textView;
 
     TextInputEditText review_edit_text;
     TextInputLayout review_layout;
@@ -67,6 +67,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         String reason = getIntent().getStringExtra("reason");
         String createdAt = getIntent().getStringExtra("createdAt");
         String status = getIntent().getStringExtra("status");
+        String HReview = getIntent().getStringExtra("hrReview");
 
         name_textView = findViewById(R.id.name_textView);
         email_textView = findViewById(R.id.email_textView);
@@ -80,6 +81,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         created_at_textView = findViewById(R.id.created_at_textView);
         status_textView = findViewById(R.id.status_textView);
         department_textView = findViewById(R.id.department_textView);
+        Hr_review_textView = findViewById(R.id.Hr_review_textView);
 
 
         review_edit_text = findViewById(R.id.review_edit_text);
@@ -98,6 +100,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
         reason_textView.setText(reason);
         created_at_textView.setText(createdAt);
         status_textView.setText(status);
+        Hr_review_textView.setText(HReview);
 
 
         Review_button.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +117,7 @@ public class HoDLeaveRequestDetailActivity extends AppCompatActivity {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 assert leaveRequestId != null;
                 db.collection("leaveRequests").document(leaveRequestId)
-                        .update("review", review, "status", "Reviewed")
+                        .update("hodreview", review, "status", "Reviewed")
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

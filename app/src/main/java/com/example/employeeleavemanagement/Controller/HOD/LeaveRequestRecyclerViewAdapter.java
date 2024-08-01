@@ -67,6 +67,7 @@ public class LeaveRequestRecyclerViewAdapter extends RecyclerView.Adapter<LeaveR
                 intent.putExtra("reason", hoDLeaveRequestModel.getReason());
                 intent.putExtra("createdAt", hoDLeaveRequestModel.getCreatedAt());
                 intent.putExtra("status", hoDLeaveRequestModel.getStatus());
+                intent.putExtra("hrReview", hoDLeaveRequestModel.getHrreview());
 
                 // Start the Leave Request Detail Activity
                 context.startActivity(intent);

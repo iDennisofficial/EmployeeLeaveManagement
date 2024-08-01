@@ -67,7 +67,10 @@ public class LeaveRequestReviewedRecyclerViewAdapter extends RecyclerView.Adapte
                 intent.putExtra("reason", hoDLeaveRequestModel.getReason());
                 intent.putExtra("createdAt", hoDLeaveRequestModel.getCreatedAt());
                 intent.putExtra("status", hoDLeaveRequestModel.getStatus());
-                intent.putExtra("review", hoDLeaveRequestModel.getReview());
+                intent.putExtra("hrReview", hoDLeaveRequestModel.getHrreview());
+                intent.putExtra("hodReview", hoDLeaveRequestModel.getHodreview());
+
+
 
 
 

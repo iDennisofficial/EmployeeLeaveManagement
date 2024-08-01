@@ -88,14 +88,15 @@ public class HoDReviewedRequestsActivity extends AppCompatActivity {
                             String reason = document.getString("reason");
                             String createdAt = document.getString("createdAt");
                             String status = document.getString("status");
-                            String review = document.getString("review");
+                            String HRreview = document.getString("hrreview");
+                            String HODreview = document.getString("hodreview");
 
                            //  AndroidUtil.ShowToast(getApplicationContext(),"The review is " + review );
 
                             // Create a HoDLeaveRequestModel object with the extracted data
                             HoDLeaveRequestModel hoDLeaveRequestModel = new HoDLeaveRequestModel(leaveRequestId,
                                     employeeId, name, email, checkNo, homephone, department, leaveType, startDate,
-                                    endDate, numberOfDays, reason, createdAt, status, review);
+                                    endDate, numberOfDays, reason, createdAt, status,HRreview, HODreview );
 
                             // Add the HoDLeaveRequestModel object to the ArrayList
                             leaveRequests.add(hoDLeaveRequestModel);

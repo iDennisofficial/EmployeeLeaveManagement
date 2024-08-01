@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -32,7 +33,9 @@ import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -175,7 +178,6 @@ public class HRDashboard extends AppCompatActivity {
 
     private void fetchEmployeeInfo() {
 
-        countLeaveRequests();
 
         String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
@@ -269,115 +271,114 @@ public class HRDashboard extends AppCompatActivity {
 
 
     public void countLeaveRequests() {
-        //Pending Leaves
+        // Listen for real-time updates on Pending Leaves
         db.collection("leaveRequests")
                 .whereEqualTo("status", "Pending")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            QuerySnapshot querySnapshot = task.getResult();
-                            if (querySnapshot != null) {
-                                PendingCount = querySnapshot.size();
-                                TextViewPendingLeaveRequests.setText(String.valueOf(PendingCount));
-                                // Use the count as needed
-                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
-                            } else {
-                                Log.d("Count", "No documents found");
-                            }
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            PendingCount = querySnapshot.size();
+                            TextViewPendingLeaveRequests.setText(String.valueOf(PendingCount));
+                            Log.d("Count", "Number of Pending leave requests: " + PendingCount);
                         } else {
-                            Log.e("Count", "Error getting documents: ", task.getException());
+                            Log.d("Count", "No documents found");
                         }
                     }
                 });
 
-        //Verified Leaves
-
+        // Listen for real-time updates on Verified Leaves
         db.collection("leaveRequests")
                 .whereEqualTo("status", "Verified")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            QuerySnapshot querySnapshot = task.getResult();
-                            if (querySnapshot != null) {
-                                VerifiedCount = querySnapshot.size();
-                                TextViewVerifiedLeaveRequests.setText(String.valueOf(VerifiedCount));
-                                // Use the count as needed
-                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
-                            } else {
-                                Log.d("Count", "No documents found");
-                            }
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            VerifiedCount = querySnapshot.size();
+                            TextViewVerifiedLeaveRequests.setText(String.valueOf(VerifiedCount));
+                            Log.d("Count", "Number of Verified leave requests: " + VerifiedCount);
                         } else {
-                            Log.e("Count", "Error getting documents: ", task.getException());
+                            Log.d("Count", "No documents found");
                         }
                     }
                 });
 
-        //Rejected Requests
+        // Listen for real-time updates on Rejected Requests
         db.collection("leaveRequests")
                 .whereEqualTo("status", "Rejected")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            QuerySnapshot querySnapshot = task.getResult();
-                            if (querySnapshot != null) {
-                                RejectedCount = querySnapshot.size();
-                                TextViewRejectedLeaveRequest.setText(String.valueOf(RejectedCount));
-                                // Use the count as needed
-                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
-                            } else {
-                                Log.d("Count", "No documents found");
-                            }
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            RejectedCount = querySnapshot.size();
+                            TextViewRejectedLeaveRequest.setText(String.valueOf(RejectedCount));
+                            Log.d("Count", "Number of Rejected leave requests: " + RejectedCount);
                         } else {
-                            Log.e("Count", "Error getting documents: ", task.getException());
+                            Log.d("Count", "No documents found");
                         }
                     }
                 });
 
-        //Onleave Requests
-
+        // Listen for real-time updates on Onleave Requests
         db.collection("leaveRequests")
                 .whereEqualTo("status", "Pending")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            QuerySnapshot querySnapshot = task.getResult();
-                            if (querySnapshot != null) {
-                                PendingCount = querySnapshot.size();
-                                TextViewOnLeaveRequests.setText(String.valueOf(PendingCount));
-                                // Use the count as needed
-                                Log.d("Count", "Number of Pending leave requests: " + PendingCount);
-                            } else {
-                                Log.d("Count", "No documents found");
-                            }
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            PendingCount = querySnapshot.size();
+                            TextViewOnLeaveRequests.setText(String.valueOf(PendingCount));
+                            Log.d("Count", "Number of Onleave requests: " + PendingCount);
                         } else {
-                            Log.e("Count", "Error getting documents: ", task.getException());
+                            Log.d("Count", "No documents found");
                         }
                     }
                 });
 
-        //Total number of employees
-        CollectionReference collectionRef = db.collection("employee");
-
-        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    QuerySnapshot querySnapshot = task.getResult();
-                    int totalEmployees = querySnapshot.size();
-                    TextViewPresentEmployees.setText(String.valueOf(totalEmployees));
-                    Log.d("Firestore", "Total documents: " + totalEmployees);
-                } else {
-                    Log.d("Firestore", "Error getting documents: " + task.getException());
-                }
-            }
-        });
+        // Listen for real-time updates on Total number of employees
+        db.collection("employee")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Firestore", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            int totalEmployees = querySnapshot.size();
+                            TextViewPresentEmployees.setText(String.valueOf(totalEmployees));
+                            Log.d("Firestore", "Total documents: " + totalEmployees);
+                        } else {
+                            Log.d("Firestore", "No documents found");
+                        }
+                    }
+                });
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        countLeaveRequests();
+    }
+
+
+
+
 }

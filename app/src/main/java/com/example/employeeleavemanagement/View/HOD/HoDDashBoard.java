@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,16 +30,22 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class HoDDashBoard extends AppCompatActivity {
 
 
-    private MaterialTextView TextViewEmployeeName;
+    private MaterialTextView TextViewEmployeeName,TextViewLeaveRequests, TextViewLeaveReviewed, TextViewLeaveCancelled, TextViewOnLeave,
+            TextViewPresentEmployees;
 
     String gender, name, phoneNumber, birthday, password, email, employeeID, department;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, Department;
@@ -47,6 +54,8 @@ public class HoDDashBoard extends AppCompatActivity {
     MaterialToolbar topAppBar;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    int PendingCount, ReviewedCount, CancelledCount, OnLeaveCount;
 
 
 
@@ -61,6 +70,17 @@ public class HoDDashBoard extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        countLeaveRequests();
+
+
+        TextViewLeaveRequests = findViewById(R.id.TextViewLeaveRequests);
+        TextViewLeaveReviewed = findViewById(R.id.TextViewLeaveReviewed);
+        TextViewLeaveCancelled = findViewById(R.id.TextViewLeaveCancelled);
+        TextViewOnLeave = findViewById(R.id.TextViewOnLeave);
+
+
+        TextViewPresentEmployees = findViewById(R.id.TextViewPresentEmployees);
 
         MaterialTextView txtViewDate = findViewById(R.id.TxtViewDate);
         TextViewEmployeeName = findViewById(R.id.TextViewEmployeeName);
@@ -124,9 +144,11 @@ public class HoDDashBoard extends AppCompatActivity {
         String department = getCurrentHODDepartment();
         Log.d(TAG, "Current HOD Department: " + department + "is not empty");
 
+        // Define the statuses you want to check
+        List<String> statuses = Arrays.asList("Verified", "Rejected");
 
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Pending")
+                .whereIn("status", statuses)
                 .whereEqualTo("department", getCurrentHODDepartment())
                 .orderBy("queryTime", Query.Direction.ASCENDING)
                 .limit(1)
@@ -163,7 +185,8 @@ public class HoDDashBoard extends AppCompatActivity {
     }
 
     private void fetchEmployeeInfo() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
         String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -262,5 +285,120 @@ public class HoDDashBoard extends AppCompatActivity {
         // Get the department of the current HOD from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
         return sharedPreferences.getString("department", "");
+    }
+
+    public void countLeaveRequests() {
+
+        // Define the statuses you want to check
+        List<String> statuses = Arrays.asList("Verified", "Rejected");
+        // Listen for real-time updates on Pending Leaves
+
+        db.collection("leaveRequests")
+                .whereIn("status", statuses)
+                .whereEqualTo("department", getCurrentHODDepartment())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            PendingCount = querySnapshot.size();
+                            TextViewLeaveRequests.setText(String.valueOf(PendingCount));
+                            Log.d("Count", "Number of Pending leave requests: " + PendingCount);
+                        } else {
+                            Log.d("Count", "No documents found");
+                        }
+                    }
+                });
+
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Reviewed")
+                .whereEqualTo("department", getCurrentHODDepartment())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            ReviewedCount = querySnapshot.size();
+                            TextViewLeaveReviewed.setText(String.valueOf(ReviewedCount));
+                            Log.d("Count", "Number of Pending leave requests: " + ReviewedCount);
+                        } else {
+                            Log.d("Count", "No documents found");
+                        }
+                    }
+                });
+
+        db.collection("leaveRequests")
+                .whereEqualTo("status", "Reviewed")
+                .whereEqualTo("department", getCurrentHODDepartment())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            CancelledCount = querySnapshot.size();
+                            TextViewLeaveCancelled.setText(String.valueOf(CancelledCount));
+                            Log.d("Count", "Number of Pending leave requests: " + CancelledCount);
+                        } else {
+                            Log.d("Count", "No documents found");
+                        }
+                    }
+                });
+
+        db.collection("leaveRequests")
+                .whereIn("status", statuses)
+                .whereEqualTo("department", getCurrentHODDepartment())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Count", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            OnLeaveCount = querySnapshot.size();
+                            TextViewOnLeave.setText(String.valueOf(OnLeaveCount));
+                            Log.d("Count", "Number of Pending leave requests: " + OnLeaveCount);
+                        } else {
+                            Log.d("Count", "No documents found");
+                        }
+                    }
+                });
+
+        db.collection("employee")
+                .whereEqualTo("department", getCurrentHODDepartment())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Firestore", "Error getting documents: ", e);
+                            return;
+                        }
+                        if (querySnapshot != null) {
+                            int totalEmployees = querySnapshot.size();
+                            TextViewPresentEmployees.setText(String.valueOf(totalEmployees));
+                            Log.d("Firestore", "Total documents: " + totalEmployees);
+                        } else {
+                            Log.d("Firestore", "No documents found");
+                        }
+                    }
+                });
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        countLeaveRequests();
     }
 }
