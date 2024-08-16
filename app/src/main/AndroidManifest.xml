@@ -23,6 +23,15 @@
         android:theme="@style/Base.Theme.EmployeeLeaveManagement"
         tools:targetApi="31">
         <activity
+            android:name=".View.HOD.DhrmDeniedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.HOD.DhrmApprovedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.Employee.EmployeeLeaveRequestActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.HR.HrRejectedLeaveRequestsActivity"
             android:exported="false" />
         <activity

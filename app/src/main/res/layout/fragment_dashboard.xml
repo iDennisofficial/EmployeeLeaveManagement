@@ -222,7 +222,7 @@
                                     app:tint="@color/white" />
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays"
+                                    android:id="@+id/TextViewUsedAnnual"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
@@ -248,8 +248,8 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.157"
-                                    app:layout_constraintStart_toEndOf="@+id/TextViewLeaveDays"
-                                    app:layout_constraintTop_toBottomOf="@id/TextViewLeaveDays"
+                                    app:layout_constraintStart_toEndOf="@+id/TextViewUsedAnnual"
+                                    app:layout_constraintTop_toBottomOf="@id/TextViewUsedAnnual"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -313,7 +313,7 @@
                                     app:tint="@color/white"/>
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays2"
+                                    android:id="@+id/TextViewUsedSick"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
@@ -339,8 +339,8 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.157"
-                                    app:layout_constraintStart_toEndOf="@+id/TextViewLeaveDays2"
-                                    app:layout_constraintTop_toBottomOf="@id/TextViewLeaveDays2"
+                                    app:layout_constraintStart_toEndOf="@+id/TextViewUsedSick"
+                                    app:layout_constraintTop_toBottomOf="@id/TextViewUsedSick"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -404,7 +404,7 @@
                                     app:tint="@color/white"/>
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays3"
+                                    android:id="@+id/TextViewUsedSabbatical"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
@@ -430,8 +430,8 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.157"
-                                    app:layout_constraintStart_toEndOf="@+id/TextViewLeaveDays3"
-                                    app:layout_constraintTop_toBottomOf="@id/TextViewLeaveDays3"
+                                    app:layout_constraintStart_toEndOf="@+id/TextViewUsedSabbatical"
+                                    app:layout_constraintTop_toBottomOf="@id/TextViewUsedSabbatical"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -507,7 +507,7 @@
                                     app:tint="@color/white"/>
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays4"
+                                    android:id="@+id/TextViewUsedMaternity"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
@@ -533,8 +533,8 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.157"
-                                    app:layout_constraintStart_toEndOf="@+id/TextViewLeaveDays4"
-                                    app:layout_constraintTop_toBottomOf="@id/TextViewLeaveDays4"
+                                    app:layout_constraintStart_toEndOf="@+id/TextViewUsedMaternity"
+                                    app:layout_constraintTop_toBottomOf="@id/TextViewUsedMaternity"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -598,7 +598,7 @@
                                     app:tint="@color/white"/>
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays5"
+                                    android:id="@+id/TextViewUsedPaternity"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
@@ -624,8 +624,8 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.157"
-                                    app:layout_constraintStart_toEndOf="@+id/TextViewLeaveDays5"
-                                    app:layout_constraintTop_toBottomOf="@id/TextViewLeaveDays5"
+                                    app:layout_constraintStart_toEndOf="@+id/TextViewUsedPaternity"
+                                    app:layout_constraintTop_toBottomOf="@id/TextViewUsedPaternity"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -689,7 +689,7 @@
                                     app:tint="@color/white"/>
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/TextViewLeaveDays6"
+                                    android:id="@+id/TextViewUsedNoPay"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
@@ -715,8 +715,8 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.157"
-                                    app:layout_constraintStart_toEndOf="@+id/TextViewLeaveDays6"
-                                    app:layout_constraintTop_toBottomOf="@id/TextViewLeaveDays6"
+                                    app:layout_constraintStart_toEndOf="@+id/TextViewUsedNoPay"
+                                    app:layout_constraintTop_toBottomOf="@id/TextViewUsedNoPay"
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <com.google.android.material.textview.MaterialTextView

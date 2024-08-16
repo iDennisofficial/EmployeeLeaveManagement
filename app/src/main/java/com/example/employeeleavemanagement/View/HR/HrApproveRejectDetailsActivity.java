@@ -121,9 +121,9 @@ public class HrApproveRejectDetailsActivity extends AppCompatActivity {
         // Get the leave balance
         getLeaveBalance(employeeId, leaveType);
 
-        approve_button.setOnClickListener(v -> showConfirmationDialog("Are you sure you want to verify this leave request?", "Verified"));
+        approve_button.setOnClickListener(v -> showConfirmationDialog("Are you sure you want to Qualify this leave request?", "Qualified"));
 
-        reject_button.setOnClickListener(v -> showConfirmationDialog("Are you sure you want to reject this leave request?", "Rejected"));
+        reject_button.setOnClickListener(v -> showConfirmationDialog("Are you sure you want to Disqualify this leave request?", "Unqualified"));
     }
 
     private void setupTopAppBar(MaterialToolbar topAppBar) {
@@ -172,8 +172,8 @@ public class HrApproveRejectDetailsActivity extends AppCompatActivity {
                     .addOnSuccessListener(documentSnapshot -> {
                         LeaveStatus leaveStatus = documentSnapshot.toObject(LeaveStatus.class);
                         if (leaveStatus != null) {
-                            boolean isHrApproved = status.equals("Verified");
-                            boolean isHrRejected = status.equals("Rejected");
+                            boolean isHrApproved = status.equals("Qualified");
+                            boolean isHrRejected = status.equals("Unqualified");
                             leaveStatus.setHrApproved(isHrApproved);
                             leaveStatus.setHrRejected(isHrRejected);
                             db.collection("leaveStatus").document(leaveRequestId)

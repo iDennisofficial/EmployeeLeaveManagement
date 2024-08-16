@@ -472,7 +472,7 @@ android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:backgroundTint="@color/green"
                     android:layout_marginBottom="20dp"
-                    android:text="Verify" />
+                    android:text="Qualify" />
 
                 <!-- Reject Button -->
                 <com.google.android.material.button.MaterialButton
@@ -484,7 +484,7 @@ android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTint="@color/chuored"
                     android:layout_marginBottom="20dp"
-                    android:text="Reject" />
+                    android:text="Disqualify" />
 
             </LinearLayout>
 

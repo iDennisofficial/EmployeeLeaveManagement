@@ -50,7 +50,7 @@ public class HoDDashBoard extends AppCompatActivity {
     String gender, name, phoneNumber, birthday, password, email, employeeID, department;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, Department;
 
-    MaterialCardView CardViewEmployeeInfo, CardViewRequests, CardViewReviewed;
+    MaterialCardView CardViewEmployeeInfo, CardViewRequests, CardViewReviewed, cardViewOlderLeaveRequests, CardViewCancelled, CardViewOnLeave;
     MaterialToolbar topAppBar;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -91,6 +91,32 @@ public class HoDDashBoard extends AppCompatActivity {
 
         topAppBar = findViewById(R.id.topAppBar);
         setupTopAppBar(topAppBar);
+
+        CardViewCancelled = findViewById(R.id.CardViewCancelled);
+
+        CardViewCancelled.setOnClickListener(view -> {
+
+            Intent intent = new Intent(HoDDashBoard.this, DhrmDeniedActivity.class);
+            startActivity(intent);
+
+        });
+
+        CardViewOnLeave = findViewById(R.id.CardViewOnLeave);
+
+        CardViewOnLeave.setOnClickListener(view -> {
+
+            Intent intent = new Intent(HoDDashBoard.this, DhrmApprovedActivity.class);
+            startActivity(intent);
+
+        });
+
+        cardViewOlderLeaveRequests = findViewById(R.id.cardViewOlderLeaveRequests);
+
+        cardViewOlderLeaveRequests.setOnClickListener( view -> {
+
+            Intent intent = new Intent(HoDDashBoard.this, HoDRequestsActivity.class);
+            startActivity(intent);
+        });
 
         CardViewRequests = findViewById(R.id.CardViewRequests);
 
@@ -145,13 +171,13 @@ public class HoDDashBoard extends AppCompatActivity {
         Log.d(TAG, "Current HOD Department: " + department + "is not empty");
 
         // Define the statuses you want to check
-        List<String> statuses = Arrays.asList("Verified", "Rejected");
+        List<String> statuses = Arrays.asList("Qualified", "Unqualified");
 
         db.collection("leaveRequests")
                 .whereIn("status", statuses)
                 .whereEqualTo("department", getCurrentHODDepartment())
                 .orderBy("queryTime", Query.Direction.ASCENDING)
-                .limit(1)
+                //.limit(1)
                 .get()
                 .addOnCompleteListener(taskOldest -> {
                     if (taskOldest.isSuccessful() && !taskOldest.getResult().isEmpty()) {
@@ -290,7 +316,7 @@ public class HoDDashBoard extends AppCompatActivity {
     public void countLeaveRequests() {
 
         // Define the statuses you want to check
-        List<String> statuses = Arrays.asList("Verified", "Rejected");
+        List<String> statuses = Arrays.asList("Qualified", "Unqualified");
         // Listen for real-time updates on Pending Leaves
 
         db.collection("leaveRequests")
@@ -334,7 +360,7 @@ public class HoDDashBoard extends AppCompatActivity {
                 });
 
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Reviewed")
+                .whereEqualTo("status", "Denied")
                 .whereEqualTo("department", getCurrentHODDepartment())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -354,7 +380,7 @@ public class HoDDashBoard extends AppCompatActivity {
                 });
 
         db.collection("leaveRequests")
-                .whereIn("status", statuses)
+                .whereEqualTo("status","Approved")
                 .whereEqualTo("department", getCurrentHODDepartment())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override

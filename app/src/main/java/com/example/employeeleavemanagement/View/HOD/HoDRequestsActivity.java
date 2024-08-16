@@ -73,7 +73,7 @@ public class HoDRequestsActivity extends AppCompatActivity {
 
     private void retrieveLeaveRequests() {
         // Define the statuses you want to check
-        List<String> statuses = Arrays.asList("Verified", "Rejected");
+        List<String> statuses = Arrays.asList("Qualified", "Unqualified");
 
         db.collection("leaveRequests")
                 .whereIn("status", statuses)

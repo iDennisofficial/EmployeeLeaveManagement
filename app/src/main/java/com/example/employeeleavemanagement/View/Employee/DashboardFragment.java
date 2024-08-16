@@ -42,7 +42,8 @@ import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
 
-    MaterialTextView TxtViewDate, TextViewEmployeeName, TextViewEmployeeCheckNo;
+    MaterialTextView TxtViewDate, TextViewEmployeeName, TextViewEmployeeCheckNo,
+            TextViewUsedAnnual, TextViewUsedSick, TextViewUsedSabbatical, TextViewUsedMaternity, TextViewUsedPaternity, TextViewUsedNoPay;
 
     String gender, name, phoneNumber, birthday, password, email, employeeID, department;
     String Gender, Name, PhoneNumber, Birthday, Password, Email, EmployeeID, Department;
@@ -68,6 +69,13 @@ public class DashboardFragment extends Fragment {
 
         topAppBar = view.findViewById(R.id.topAppBar);
         setupTopAppBar(topAppBar);
+
+        TextViewUsedAnnual = view.findViewById(R.id.TextViewUsedAnnual);
+        TextViewUsedSick = view.findViewById(R.id.TextViewUsedSick);
+        TextViewUsedSabbatical = view.findViewById(R.id.TextViewUsedSabbatical);
+        TextViewUsedMaternity = view.findViewById(R.id.TextViewUsedMaternity);
+        TextViewUsedPaternity = view.findViewById(R.id.TextViewUsedPaternity);
+        TextViewUsedNoPay = view.findViewById(R.id.TextViewUsedNoPay);
 
 
 
@@ -103,11 +111,19 @@ public class DashboardFragment extends Fragment {
                         String oldestStartDate = oldestDocument.getString("createdAt");
                         String oldestStatus = oldestDocument.getString("status");
 
-                        // Set the text of the TextViews
+                        // Assuming these are the TextViews where you display the employee details
                         usernameTextView.setText(oldestEmployeeName);
                         dateTextView.setText(oldestStartDate);
                         typeTextView.setText(oldestLeaveType);
                         statusTextView.setText(oldestStatus);
+
+                    // Check if the status is "Approved", "Denied", "Qualified", or "Unqualified" before sending the notification
+                        if ("Approved".equals(oldestStatus) || "Denied".equals(oldestStatus) ||
+                                "Qualified".equals(oldestStatus) || "Unqualified".equals(oldestStatus)) {
+                            // Make sure to pass the actual activity class you want to open with the notification
+                            AndroidUtil.sendNotification(getContext(), "Leave Information", "Your Leave Application has been " + oldestStatus, getActivity().getClass());
+                        }
+
                     } else {
                         // Enhanced error handling
                         if (taskOldest.getException() != null) {
@@ -118,6 +134,10 @@ public class DashboardFragment extends Fragment {
                         AndroidUtil.ShowToast(requireContext(), "Not getting the values");
                     }
                 });
+
+        fetchLeaveBalances();
+
+
 
 
         return view;
@@ -205,4 +225,83 @@ public class DashboardFragment extends Fragment {
         });
 
     }
+
+    private void fetchLeaveBalances() {
+        db.collection("leaveBalance").document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Get the current leave balances from Firestore as long
+                        Long annualLeaveLong = documentSnapshot.getLong("annualLeave");
+                        Long maternityLeaveLong = documentSnapshot.getLong("maternityLeave");
+                        Long noPayLeaveLong = documentSnapshot.getLong("noPayLeave");
+                        Long paternityLeaveLong = documentSnapshot.getLong("paternityLeave");
+                        Long sabbaticalLeaveLong = documentSnapshot.getLong("sabbaticalLeave");
+                        Long sickLeaveLong = documentSnapshot.getLong("sickLeave");
+
+                        // Log the fetched values
+                        Log.d(TAG, "Annual Leave: " + annualLeaveLong);
+                        Log.d(TAG, "Maternity Leave: " + maternityLeaveLong);
+                        Log.d(TAG, "No Pay Leave: " + noPayLeaveLong);
+                        Log.d(TAG, "Paternity Leave: " + paternityLeaveLong);
+                        Log.d(TAG, "Sabbatical Leave: " + sabbaticalLeaveLong);
+                        Log.d(TAG, "Sick Leave: " + sickLeaveLong);
+
+                        // Convert the fetched values to long, or handle null values
+                        long annualLeave = annualLeaveLong != null ? annualLeaveLong : 0;
+                        long maternityLeave = maternityLeaveLong != null ? maternityLeaveLong : 0;
+                        long noPayLeave = noPayLeaveLong != null ? noPayLeaveLong : 0;
+                        long paternityLeave = paternityLeaveLong != null ? paternityLeaveLong : 0;
+                        long sabbaticalLeave = sabbaticalLeaveLong != null ? sabbaticalLeaveLong : 0;
+                        long sickLeave = sickLeaveLong != null ? sickLeaveLong : 0;
+
+                        // Define the maximum leave limits
+                        final long MAX_ANNUAL_LEAVE = 28L;
+                        final long MAX_MATERNITY_LEAVE = 84L;
+                        final long MAX_NO_PAY_LEAVE = 365L;
+                        final long MAX_PATERNITY_LEAVE = 7L;
+                        final long MAX_SABBATICAL_LEAVE = 365L;
+                        final long MAX_SICK_LEAVE = 180L;
+
+                        // Calculate the remaining leave balances
+                        long remainingAnnualLeave = MAX_ANNUAL_LEAVE - annualLeave;
+                        long remainingMaternityLeave = MAX_MATERNITY_LEAVE - maternityLeave;
+                        long remainingNoPayLeave = MAX_NO_PAY_LEAVE - noPayLeave;
+                        long remainingPaternityLeave = MAX_PATERNITY_LEAVE - paternityLeave;
+                        long remainingSabbaticalLeave = MAX_SABBATICAL_LEAVE - sabbaticalLeave;
+                        long remainingSickLeave = MAX_SICK_LEAVE - sickLeave;
+
+                        // Log the remaining balances
+                        Log.d(TAG, "Remaining Annual Leave: " + remainingAnnualLeave);
+                        Log.d(TAG, "Remaining Maternity Leave: " + remainingMaternityLeave);
+                        Log.d(TAG, "Remaining No Pay Leave: " + remainingNoPayLeave);
+                        Log.d(TAG, "Remaining Paternity Leave: " + remainingPaternityLeave);
+                        Log.d(TAG, "Remaining Sabbatical Leave: " + remainingSabbaticalLeave);
+                        Log.d(TAG, "Remaining Sick Leave: " + remainingSickLeave);
+
+                        // Update the TextViews with the remaining balances
+                        TextViewUsedAnnual.setText(String.valueOf(remainingAnnualLeave));
+                        TextViewUsedMaternity.setText(String.valueOf(remainingMaternityLeave));
+                        TextViewUsedNoPay.setText(String.valueOf(remainingNoPayLeave));
+                        TextViewUsedPaternity.setText(String.valueOf(remainingPaternityLeave));
+                        TextViewUsedSabbatical.setText(String.valueOf(remainingSabbaticalLeave));
+                        TextViewUsedSick.setText(String.valueOf(remainingSickLeave));
+                    } else {
+                        Log.d(TAG, "No leave balance data found for UID: " + uid);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error fetching leave balances", e);
+                    AndroidUtil.ShowToast(requireContext(), "Error fetching leave balances");
+                });
+    }
+
+
+
+    private String getCurrentEmployeeID() {
+        // Get the ID of the current user from SharedPreferences
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("EmployeeInfo", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("UID", "");
+    }
+
 }

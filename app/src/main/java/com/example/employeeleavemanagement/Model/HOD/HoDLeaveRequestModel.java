@@ -177,7 +177,7 @@ public class HoDLeaveRequestModel {
         this.hrreview = hrreview;
     }
 
-    public HoDLeaveRequestModel(String leaveRequestId, String employeeId, String email, String name, String checkNo, String homephone, String department, String leaveType, String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status, String hrreview, String hodreview) {
+    public HoDLeaveRequestModel(String leaveRequestId, String employeeId, String name, String email, String checkNo, String homephone, String department, String leaveType, String startDate, String endDate, long numberOfDays, String reason, String createdAt, String status, String hrreview, String hodreview) {
         this.leaveRequestId = leaveRequestId;
         this.employeeId = employeeId;
         this.email = email;

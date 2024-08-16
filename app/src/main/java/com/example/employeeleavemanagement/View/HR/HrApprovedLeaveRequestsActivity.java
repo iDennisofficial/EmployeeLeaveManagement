@@ -63,7 +63,7 @@ public class HrApprovedLeaveRequestsActivity extends AppCompatActivity {
 
     private void retrieveLeaveRequests() {
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Verified")
+                .whereEqualTo("status", "Qualified")
                 .orderBy("queryTime", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {

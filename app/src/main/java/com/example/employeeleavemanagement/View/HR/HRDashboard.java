@@ -293,7 +293,7 @@ public class HRDashboard extends AppCompatActivity {
 
         // Listen for real-time updates on Verified Leaves
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Verified")
+                .whereEqualTo("status", "Qualified")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
@@ -313,7 +313,7 @@ public class HRDashboard extends AppCompatActivity {
 
         // Listen for real-time updates on Rejected Requests
         db.collection("leaveRequests")
-                .whereEqualTo("status", "Rejected")
+                .whereEqualTo("status", "Unqualified")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {

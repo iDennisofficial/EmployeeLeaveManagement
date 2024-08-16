@@ -18,13 +18,16 @@ public class LeaveRequest {
     private String createdAt;
     private String status;
     private Timestamp queryTime;
+    private String hrReview;
+    private String hodReview;
+    private String dhrmReview;
 
     public LeaveRequest() {
     }
 
     public LeaveRequest(String employeeId, String name, String email, String checkNo, String homephone,
                         String department, String leaveType, String startDate, String endDate, long numberOfDays,
-                        String reason, String createdAt, String status, Timestamp queryTime) {
+                        String reason, String createdAt, String status, String hrReview, String hodReview, String dhrmReview) {
         this.employeeId = employeeId;
         this.name = name;
         this.email = email;
@@ -38,8 +41,11 @@ public class LeaveRequest {
         this.reason = reason;
         this.createdAt = createdAt;
         this.status = status;
-        this.queryTime = queryTime;
+        this.hrReview = hrReview;
+        this.hodReview = hodReview;
+        this.dhrmReview = dhrmReview;
     }
+
 
     public String getEmployeeId() {
         return employeeId;
@@ -81,20 +87,20 @@ public class LeaveRequest {
         this.homephone = homephone;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public String getLeaveType() {
         return leaveType;
     }
 
     public void setLeaveType(String leaveType) {
         this.leaveType = leaveType;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public String getStartDate() {
@@ -151,5 +157,29 @@ public class LeaveRequest {
 
     public void setQueryTime(Timestamp queryTime) {
         this.queryTime = queryTime;
+    }
+
+    public String getHrReview() {
+        return hrReview;
+    }
+
+    public void setHrReview(String hrReview) {
+        this.hrReview = hrReview;
+    }
+
+    public String getHodReview() {
+        return hodReview;
+    }
+
+    public void setHodReview(String hodReview) {
+        this.hodReview = hodReview;
+    }
+
+    public String getDhrmReview() {
+        return dhrmReview;
+    }
+
+    public void setDhrmReview(String dhrmReview) {
+        this.dhrmReview = dhrmReview;
     }
 }
